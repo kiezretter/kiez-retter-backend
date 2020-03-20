@@ -1,0 +1,62 @@
+<%= form_for @owner, :html => { :class => "form-horizontal owner" } do |f| %>
+
+  <% if @owner.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@owner.errors.count, "error") %> prohibited this owner from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @owner.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :business_id, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :business_id, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:business_id) %>
+  </div>
+  <div class="form-group">
+    <%= f.label :email, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :email, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:email) %>
+  </div>
+  <div class="form-group">
+    <%= f.label :paypal_handle, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :paypal_handle, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:paypal_handle) %>
+  </div>
+  <div class="form-group">
+    <%= f.label :personal_message, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :personal_message, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:personal_message) %>
+  </div>
+  <div class="form-group">
+    <%= f.label :personal_image_link, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :personal_image_link, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:personal_image_link) %>
+  </div>
+
+  <div class="form-group">
+    <div class="col-lg-offset-2 col-lg-10">
+      <%= f.submit nil, :class => 'btn btn-primary' %>
+      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                owners_path, :class => 'btn btn-default' %>
+    </div>
+  </div>
+
+<% end %>
