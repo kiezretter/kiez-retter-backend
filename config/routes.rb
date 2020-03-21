@@ -14,5 +14,6 @@ Rails.application.routes.draw do
 
   namespace 'api', defaults: { format: :json } do
     resources :businesses, only: %i[show index create]
+    resources :donations, only: %i[create]
   end
 end

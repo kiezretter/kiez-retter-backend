@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_21_195730) do
+ActiveRecord::Schema.define(version: 2020_03_21_234951) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,6 +73,14 @@ ActiveRecord::Schema.define(version: 2020_03_21_195730) do
     t.index ["business_type_id"], name: "index_businesses_on_business_type_id"
   end
 
+  create_table "donations", force: :cascade do |t|
+    t.bigint "business_id", null: false
+    t.integer "amount_cents"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["business_id"], name: "index_donations_on_business_id"
+  end
+
   create_table "owners", force: :cascade do |t|
     t.bigint "business_id", null: false
     t.string "email"
@@ -102,6 +110,7 @@ ActiveRecord::Schema.define(version: 2020_03_21_195730) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "businesses", "business_types"
+  add_foreign_key "donations", "businesses"
   add_foreign_key "owners", "businesses"
   add_foreign_key "passports", "owners"
   add_foreign_key "trade_certificates", "owners", column: "business_id"
