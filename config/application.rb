@@ -34,5 +34,11 @@ module Backend
       end
     end
     config.generators.system_tests = nil
+
+    config.imgix = {
+        source: Rails.application.credentials.dig(:imgix, :source),
+        use_https: true,
+        include_library_param: true
+    }
   end
 end
