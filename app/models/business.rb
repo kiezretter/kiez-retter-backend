@@ -3,5 +3,6 @@
 class Business < ApplicationRecord
   has_one :owner
   has_one :trade_certificate
-  has_one :passport
+  belongs_to :business_type
+  accepts_nested_attributes_for :owner
 end

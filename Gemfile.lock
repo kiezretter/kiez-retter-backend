@@ -81,6 +81,7 @@ GEM
       activesupport (>= 3.0.0)
       uniform_notifier (~> 1.11)
     byebug (11.1.1)
+    coderay (1.1.2)
     commonjs (0.2.7)
     concurrent-ruby (1.1.6)
     crass (1.0.6)
@@ -134,6 +135,9 @@ GEM
       mini_portile2 (~> 2.4.0)
     orm_adapter (0.5.0)
     pg (1.2.3)
+    pry (0.13.0)
+      coderay (~> 1.1)
+      method_source (~> 1.0)
     puma (4.3.3)
       nio4r (~> 2.0)
     rack (2.2.2)
@@ -244,6 +248,7 @@ DEPENDENCIES
   jbuilder (~> 2.7)
   listen (>= 3.0.5, < 3.2)
   pg (>= 0.18, < 2.0)
+  pry
   puma (~> 4.1)
   rack-cors
   rails (~> 6.0.2, >= 6.0.2.2)

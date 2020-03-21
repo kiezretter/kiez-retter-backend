@@ -2,4 +2,5 @@
 
 class Owner < ApplicationRecord
   belongs_to :business
+  has_one :passport
 end
