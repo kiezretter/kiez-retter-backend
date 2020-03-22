@@ -77,7 +77,8 @@ Owner details
 * personal message
 * personal thank you
 * paypal handle (for now paypal.me link after http://paypal.me/)
-* image(s)
+* one image of the business
+* optionally one image of the owner
 
 Example:
 ```
@@ -88,7 +89,8 @@ Example:
       "message": "Spende ein halbes Bier!",
       "thank_you": "Danke!",
       "paypal": "feuermelder",
-      "images": []
+      "favorite_place_image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABPYA",
+      "owner_image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABPYA"
     }
 ```
 
@@ -112,6 +114,7 @@ All necessary information to register and verify a new company is sent to the ba
 ## Parameters
 
 Business and owner details plus documents for verification. `business_type_id` still has to receive a mapping
+Images are transferred using base64 encoding.
 
 Example:
 ```
@@ -127,13 +130,17 @@ Example:
       "personal_message": "Spende ein halbes Bier!",
       "personal_thank_you": "Danke!",
       "business_type_id": 1,
+      "trade_licence_image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABPYA",
+      "id_card_image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABPYA",
+      "favorite_place_image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABPYA",
       "owner": {
         "email": "hello@world.de",
         "first_name": "Mein",
         "last_name": "Name",
         "salutation": "Mr.",
         "nick_name": "Worldwide",
-        "paypal_handle": "robinzuschke"
+        "paypal_handle": "robinzuschke",
+        "owner_image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABPYA"
       }
     }
 ```
