@@ -89,10 +89,12 @@ Example:
       "message": "Spende ein halbes Bier!",
       "thank_you": "Danke!",
       "paypal": "feuermelder",
-      "favorite_place_image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABPYA",
-      "owner_image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABPYA"
+      "favorite_place_image": "https://kiezretter.imgix.net/h93e6a8zg0tmjmpusqxo2x0hntic?ixlib=rails-4.0.0",
+      "owner_image": "https://kiezretter.imgix.net/h93e6a8zg0tmjmpusqxo2x0hntic?ixlib=rails-4.0.0"
     }
 ```
+
+The image URLs can be modified in order to return different dimensions (and much more). See the [Imgix API reference](https://docs.imgix.com/apis/url) for details.
 
 ## Failure Return Value
 
