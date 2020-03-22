@@ -131,7 +131,7 @@ Example:
       "city": "Berlin",
       "personal_message": "Spende ein halbes Bier!",
       "personal_thank_you": "Danke!",
-      "business_type_id": 1,
+      "business_type": "bar",
       "favorite_place_image": { 
         "data": "data:image/png;base64,iVBORw" 
       },
