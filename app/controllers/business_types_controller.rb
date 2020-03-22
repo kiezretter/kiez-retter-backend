@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class BusinessTypesController < ApplicationController
-  before_action :set_business_type, only: [:show, :edit, :update, :destroy]
+  before_action :set_business_type, only: %i[show edit update destroy]
 
   # GET /business_types
   # GET /business_types.json
@@ -9,8 +11,7 @@ class BusinessTypesController < ApplicationController
 
   # GET /business_types/1
   # GET /business_types/1.json
-  def show
-  end
+  def show; end
 
   # GET /business_types/new
   def new
@@ -18,8 +19,7 @@ class BusinessTypesController < ApplicationController
   end
 
   # GET /business_types/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /business_types
   # POST /business_types.json
@@ -62,13 +62,14 @@ class BusinessTypesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_business_type
-      @business_type = BusinessType.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def business_type_params
-      params.fetch(:business_type, {})
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_business_type
+    @business_type = BusinessType.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def business_type_params
+    params.require(:business_type).permit(:name, :slug)
+  end
 end
