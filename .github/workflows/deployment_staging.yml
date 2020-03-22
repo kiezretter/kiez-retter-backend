@@ -1,0 +1,31 @@
+name: Deploy to AWS ECS Fargate (Staging)
+
+on:
+  push:
+    branches:
+      - 'staging'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: chrislennon/action-aws-cli@v1.1
+
+      - name: Build image
+        run: docker build -t 647713163217.dkr.ecr.eu-central-1.amazonaws.com/kiez-retter-backend:staging .
+
+      - name: Log into ECR
+        run: $(aws ecr get-login --no-include-email --region eu-central-1)
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Push image
+        run: docker push 647713163217.dkr.ecr.eu-central-1.amazonaws.com/kiez-retter-backend:staging
+
+      - name: Force new deployment
+        run: aws ecs update-service --cluster kiez-retter-backend --service kiezretter-staging --force-new-deployment --region eu-central-1
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
