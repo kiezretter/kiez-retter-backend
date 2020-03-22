@@ -1,4 +1,17 @@
-﻿# Query Registered Businesses in the Vicinity
+﻿
+# Location Type Mapping
+
+| Name   | Icon Usage                                        | slug      |
+|--------|---------------------------------------------------|-----------|
+| Kneipe | Spendenicons (in drei verschiedenen Größen): Bier | bar       |
+| Club   | Spendenicons: Cocktailgläser                      | club      |
+| Späti  | Spendenicons: Schokolade - Bier                   | late_shop |
+|Restaurant | Spendenicons: Vorspeise, Hauptspeise, Dessert | restaurant |
+|Café | Spendenicons: Kaffee | cafe |
+|Einzelhandel | Münzen & Geldscheine | shop |
+|Dienstleistung | Münzen & Geldscheine | service |
+
+# Query Registered Businesses in the Vicinity
 
 The frontend sends a location and the backend returns a list of registered businesses in the vicinity  
 with their respective id, name and location, and the information, whether the business has already been verified.
