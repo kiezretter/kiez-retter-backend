@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  devise_for :admins
+  devise_for :admins, :skip => [:registrations]
   authenticate :admin do
     root to: 'pages#home'
     resources :business_types
