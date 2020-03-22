@@ -28,6 +28,7 @@ FROM dev AS prod
 
 ENV RAILS_ENV production
 COPY . .
+ARG RAILS_MASTER_KEY
 RUN bundle exec rake assets:precompile
 
 COPY docker-entrypoint.sh /

@@ -13,7 +13,7 @@ jobs:
       - uses: chrislennon/action-aws-cli@v1.1
 
       - name: Build image
-        run: docker build -t 647713163217.dkr.ecr.eu-central-1.amazonaws.com/kiez-retter-backend:staging .
+        run: docker build --build-arg RAILS_MASTER_KEY -t 647713163217.dkr.ecr.eu-central-1.amazonaws.com/kiez-retter-backend:staging .
         env:
           RAILS_MASTER_KEY: ${{secrets.RAILS_MASTER_KEY}}
 
