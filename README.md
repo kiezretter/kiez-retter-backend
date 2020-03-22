@@ -1,4 +1,17 @@
-﻿# Query Registered Businesses in the Vicinity
+﻿
+# Location Type Mapping
+
+| Name   | Icon Usage                                        | slug      |
+|--------|---------------------------------------------------|-----------|
+| Kneipe | Spendenicons (in drei verschiedenen Größen): Bier | bar       |
+| Club   | Spendenicons: Cocktailgläser                      | club      |
+| Späti  | Spendenicons: Schokolade - Bier                   | late_shop |
+|Restaurant | Spendenicons: Vorspeise, Hauptspeise, Dessert | restaurant |
+|Café | Spendenicons: Kaffee | cafe |
+|Einzelhandel | Münzen & Geldscheine | shop |
+|Dienstleistung | Münzen & Geldscheine | service |
+
+# Query Registered Businesses in the Vicinity
 
 The frontend sends a location and the backend returns a list of registered businesses in the vicinity  
 with their respective id, name and location, and the information, whether the business has already been verified.
@@ -89,6 +102,7 @@ Example:
       "message": "Spende ein halbes Bier!",
       "thank_you": "Danke!",
       "paypal": "feuermelder",
+      "business_type: "bar",
       "favorite_place_image": "https://kiezretter.imgix.net/h93e6a8zg0tmjmpusqxo2x0hntic?ixlib=rails-4.0.0",
       "owner_image": "https://kiezretter.imgix.net/h93e6a8zg0tmjmpusqxo2x0hntic?ixlib=rails-4.0.0"
     }
@@ -131,7 +145,7 @@ Example:
       "city": "Berlin",
       "personal_message": "Spende ein halbes Bier!",
       "personal_thank_you": "Danke!",
-      "business_type_id": 1,
+      "business_type": "bar",
       "favorite_place_image": { 
         "data": "data:image/png;base64,iVBORw" 
       },
