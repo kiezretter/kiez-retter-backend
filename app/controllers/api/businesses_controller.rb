@@ -27,9 +27,14 @@ module Api
       params.require(:business).permit(
         :business_type_id, :gmap_id, :name, :lat, :lng,
         :phone_number, :street_address, :postcode, :city,
-        :personal_message, :personal_thank_you,
-        owner_attributes: %i[
-          email first_name last_name salutation nick_name paypal_handle
+        :personal_message, :personal_thank_you, 
+        favorite_place_image: :data,
+        owner_attributes: [
+          :email, :first_name, :last_name, :salutation, :nick_name, :paypal_handle,
+          owner_image: :data, id_card_image: :data
+        ],
+        trade_certificate_attributes: [
+          trade_license_image: :data
         ]
       )
     end

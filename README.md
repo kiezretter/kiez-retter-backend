@@ -130,17 +130,27 @@ Example:
       "personal_message": "Spende ein halbes Bier!",
       "personal_thank_you": "Danke!",
       "business_type_id": 1,
-      "trade_licence_image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABPYA",
-      "id_card_image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABPYA",
-      "favorite_place_image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABPYA",
-      "owner": {
+      "favorite_place_image": { 
+        "data": "data:image/png;base64,iVBORw" 
+      },
+      "owner_attributes": {
         "email": "hello@world.de",
         "first_name": "Mein",
         "last_name": "Name",
         "salutation": "Mr.",
         "nick_name": "Worldwide",
         "paypal_handle": "robinzuschke",
-        "owner_image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABPYA"
+        "owner_image": { 
+          "data": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABPYA" 
+        },
+        "id_card_image": {
+          "data": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABPYA"
+        }
+      },
+      "trade_certificate_attributes": {
+        "trade_licence_image": {
+          "data: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABPYA"
+        }
       }
     }
 ```
