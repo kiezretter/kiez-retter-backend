@@ -89,6 +89,7 @@ Example:
       "message": "Spende ein halbes Bier!",
       "thank_you": "Danke!",
       "paypal": "feuermelder",
+      "business_type: "bar",
       "favorite_place_image": "https://kiezretter.imgix.net/h93e6a8zg0tmjmpusqxo2x0hntic?ixlib=rails-4.0.0",
       "owner_image": "https://kiezretter.imgix.net/h93e6a8zg0tmjmpusqxo2x0hntic?ixlib=rails-4.0.0"
     }
