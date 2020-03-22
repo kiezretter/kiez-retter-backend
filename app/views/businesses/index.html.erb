@@ -23,7 +23,7 @@
         <td><%= business.name %></td>
         <td><%= business.lat %></td>
         <td><%= business.lng %></td>
-        <td><%= business.verified %></td>
+        <td><%= business.verified? %></td>
         <td><%=l business.created_at %></td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),

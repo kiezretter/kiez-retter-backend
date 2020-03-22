@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class BusinessesController < ApplicationController
-  before_action :set_business, only: %i[show edit update destroy]
+  before_action :set_business, only: %i[show edit update destroy approve reject]
 
   # GET /businesses
   # GET /businesses.json
@@ -59,6 +59,18 @@ class BusinessesController < ApplicationController
       format.html { redirect_to businesses_url, notice: 'Business was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def approve
+    @business.verified = true
+    @business.save!
+    redirect_to businesses_path, notice: 'Statement was approved.'
+  end
+
+  def reject
+    @business.verified = false
+    @business.save!
+    redirect_to businesses_path, alert: 'Statement was rejected.'
   end
 
   private
