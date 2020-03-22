@@ -5,7 +5,8 @@ module Api
     respond_to :json
 
     def create
-      business = Business.new(business_params)
+      business_type = BusinessType.find_by(slug: params[:business_type])
+      business = Business.new(business_params.merge(business_type: business_type))
       if business.save!
         render json: business, status: :created
       else
@@ -26,8 +27,9 @@ module Api
 
     def business_params
       params.require(:business).permit(
-        :business_type_id, :gmap_id, :name, :lat, :lng,
+        :gmap_id, :name, :lat, :lng,
         :phone_number, :street_address, :postcode, :city,
+        :business_type,
         :personal_message, :personal_thank_you, 
         favorite_place_image: :data,
         owner_attributes: [
