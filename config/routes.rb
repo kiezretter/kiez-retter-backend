@@ -3,7 +3,8 @@
 Rails.application.routes.draw do
   devise_for :admins
   authenticate :admin do
-    root to: 'businesses#index'
+    root to: 'pages#home'
+    resources :business_types
     resources :businesses do
       member do
         patch :approve

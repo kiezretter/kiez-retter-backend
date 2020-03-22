@@ -1,0 +1,17 @@
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <%= link_to root_path do %>
+        <%= image_tag('kiezretter.png', class: 'navbar-brand') %>
+      <% end %>
+    </div>
+
+    <ul class="nav navbar-nav navbar-left">
+      <li><%= link_to 'Business Kategorien', business_types_path %></li>
+    </ul>
+
+    <ul class="nav navbar-nav navbar-left">
+      <li><%= link_to 'Businesses', businesses_path %></li>
+    </ul>
+  </div>
+</nav>

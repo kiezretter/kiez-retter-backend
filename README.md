@@ -157,32 +157,32 @@ to keep track of the - promised - donations.
 
 ## Endpoint
 
-    /api/businesses/:id/donation
-    
-Where the `:id` is the google maps id of the business, for which a donation will be made.
+    /api/donations
 
 ## Type
 
     http POST
 
 ## Parameters
-
+Where the `business_id` is the id of the business, for which a donation will be made.
 An object containing the promised amount in Euro Cents.
 (we could also send the google maps id as part of the payload instead of the url)
 
 Example:
-
-    {
-        amount : 1000 // 10 euros
-    }
+```
+  {
+    "business_id": 1,
+    "amount_cents": 500
+  }
+```
 
 ## Response
 
-Http code ?
+Http code 201
 
 ## Failure Response
 
-Http code ?
+Http code 422
 (should probably be ignored in the frontend)
 
 

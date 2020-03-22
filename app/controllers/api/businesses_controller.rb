@@ -14,7 +14,6 @@ module Api
     end
 
     def show
-      @business = Business.find(params[:id])
       @owner = @business.owner
     end
 

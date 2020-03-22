@@ -16,6 +16,14 @@
   <dd><%= @business.verified %></dd>
 </dl>
 
+<%= link_to 'Approve', approve_business_path(@business),
+    method: :patch, class: 'btn btn-success btn-xs' %>
+<%= link_to 'Reject', reject_business_path(@business),
+    method: :patch, class: 'btn btn-danger btn-xs' %>
+
+</br>
+</br>
+
 <%= link_to t('.back', :default => t("helpers.links.back")),
               businesses_path, :class => 'btn btn-default'  %>
 <%= link_to t('.edit', :default => t("helpers.links.edit")),
