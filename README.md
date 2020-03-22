@@ -1,4 +1,4 @@
-# Query Registered Businesses in the Vicinity
+﻿# Query Registered Businesses in the Vicinity
 
 The frontend sends a location and the backend returns a list of registered businesses in the vicinity  
 with their respective id, name and location, and the information, whether the business has already been verified.
@@ -18,40 +18,34 @@ Longitude `lng` and latitude `lat` are set to floating point numbers with . as d
 ## Return Value
 
 List of businesses in JSON format each with the following properties
-* google maps id (text)
+* business id
+* google maps id
 * name
 * longitude
 * latitude
-* business type
-* business type icon uri
 * verification status
-* phone number (as text)
-* street address
-* postcode (as text)
-* city
 
 Example:
-
+```
     [
-        // business 1
-        {
-            gmap_id : "42",
-            name : "Feuermelder",
-            longitude : 13.4590208,
-            latitude : 52.5097213,
-            type : "Bar",
-            icon_uri : "?",
-            verified : true,
-            phone_number : "0302911937",
-            street_address : "Krossener Str. 24",
-            postcode : "10245",
-            city : "Berlin",
-        }
-        // business 2
-        {
-            ...
-        }
+      {
+        "id": 1,
+        "gmap_id": "huisdfhuias7sadyf7s8dyd",
+        "name": "Feuermelder",
+        "lng": 13.4590208,
+        "lat": 52.5097213,
+        "verified": true,
+      },
+      {
+        "id": 2,
+        "gmap_id": null,
+        "name": "Burgeramt",
+        "lat": 52.5099916,
+        "lng": 13.460808,
+        "verified": null
+      }
     ]
+```
 
 ## Failure Return Value
 
@@ -72,28 +66,31 @@ The details of the selected business and owner for the detailed view and a possi
 
 ## Parameters
 
-The `:id` is the google maps id of the selected business.
+The `:id` is the internal id of the selected business, which was returned in the list of businesses in the vicinity.
 
 ## Return Value
 
 Owner details
+* business id
 * google maps id
 * nick name
 * personal message
 * personal thank you
 * paypal handle (for now paypal.me link after http://paypal.me/)
-* image(s)?
+* image(s)
 
 Example:
-
+```
     {
-        gmap_id : "42",
-        nick_name : "Durstlรถscher",        
-        message : "Spende ein halbes Bier!",
-        thank_you : "Danke!",
-        paypal : "feuermelder",
-        images : [???]
+      "business_id": 1, 
+      "gmap_id": "huisdfhuias7sadyf7s8dyd",
+      "nick_name": "Feuermelder",        
+      "message": "Spende ein halbes Bier!",
+      "thank_you": "Danke!",
+      "paypal": "feuermelder",
+      "images": []
     }
+```
 
 ## Failure Return Value
 
@@ -119,25 +116,25 @@ Business and owner details plus documents for verification. `business_type_id` s
 Example:
 ```
     {
-    	"gmap_id": "huisdfhuias7sadyf7s8dyd",
-    	"name": "Feuermelder",
-    	"lng": 13.4590208,
-    	"lat": 52.5097213,
-    	"phone_number": "0302911937",
-    	"street_address": "Krossener Str. 24",
-    	"postcode": "10245",
-    	"city": "Berlin",
-    	"personal_message": "Spende ein halbes Bier!",
-    	"personal_thank_you": "Danke!",
-    	"business_type_id": 1,
-    	"owner": {
-    		"email": "hello@world.de",
-    		"first_name": "Mein",
-    		"last_name": "Name",
-    		"salutation": "Mr.",
-    		"nick_name": "Worldwide",
-    		"paypal_handle": "robinzuschke"
-    	}
+      "gmap_id": "huisdfhuias7sadyf7s8dyd",
+      "name": "Feuermelder",
+      "lng": 13.4590208,
+      "lat": 52.5097213,
+      "phone_number": "0302911937",
+      "street_address": "Krossener Str. 24",
+      "postcode": "10245",
+      "city": "Berlin",
+      "personal_message": "Spende ein halbes Bier!",
+      "personal_thank_you": "Danke!",
+      "business_type_id": 1,
+      "owner": {
+        "email": "hello@world.de",
+        "first_name": "Mein",
+        "last_name": "Name",
+        "salutation": "Mr.",
+        "nick_name": "Worldwide",
+        "paypal_handle": "robinzuschke"
+      }
     }
 ```
 
@@ -166,14 +163,13 @@ to keep track of the - promised - donations.
 ## Parameters
 Where the `business_id` is the id of the business, for which a donation will be made.
 An object containing the promised amount in Euro Cents.
-(we could also send the google maps id as part of the payload instead of the url)
 
 Example:
 ```
-  {
-    "business_id": 1,
-    "amount_cents": 500
-  }
+    {
+      "business_id": 1,
+      "amount_cents": 500
+    }
 ```
 
 ## Response
