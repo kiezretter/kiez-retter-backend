@@ -6,7 +6,16 @@ class BusinessesController < ApplicationController
   # GET /businesses
   # GET /businesses.json
   def index
-    @businesses = Business.all
+    radiusInKm = 10 # could be an api parameter
+    kmPerDegree = 111.045
+    degLat = radiusInKm / kmPerDegree
+    minLat = lat - degLat
+    maxLat = lat + degLat
+    degLng = radiusInKm / kmPerDegree * Math.cos(lat * Math::PI / 180)
+    minLng = lng - degLng
+    maxLng = lng + degLng
+    @businesses = Business.where("lat >= ? AND lat <= ? AND lng >= ? and lng <= ?",
+                                 minLat, maxLat, minLng, maxLng)
   end
 
   # GET /businesses/1
