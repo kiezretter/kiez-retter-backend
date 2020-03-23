@@ -20,7 +20,7 @@ module Api
     end
 
     def index
-      @businesses = Business.all
+      @businesses = Business.not_rejected
     end
 
     private

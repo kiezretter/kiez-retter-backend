@@ -43,14 +43,14 @@
     </div>
     <%=f.error_span(:lng) %>
   </div>
-  <div class="form-group">
-    <%= f.label :verified, :class => 'control-label col-lg-2' %>
-    <div class="col-lg-10">
-      <%= f.text_field :verified, :class => 'form-control' %>
+  <%= fields_for :owner, @business.owner do |owner_field| %>
+    <div class="form-group">
+      <%= f.label :paypal_handle, :class => 'control-label col-lg-2' %>
+      <div class="col-lg-10">
+        <%= owner_field.text_field :paypal_handle, class: 'form-control' %>
+      </div>
     </div>
-    <%=f.error_span(:verified) %>
-  </div>
-
+  <% end %>
   <div class="form-group">
     <div class="col-lg-offset-2 col-lg-10">
       <%= f.submit nil, :class => 'btn btn-primary' %>
