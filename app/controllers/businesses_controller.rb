@@ -80,8 +80,13 @@ class BusinessesController < ApplicationController
     @business = Business.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
   def business_params
-    params.fetch(:business, {})
+    params.require(:business).permit(
+      :gmap_id, :name, :lat, :lng,
+      :phone_number, :street_address, :postcode, :city,
+      :business_type,
+      :personal_message, :personal_thank_you,
+      owner_attributes: [:paypal_handle]
+    )
   end
 end

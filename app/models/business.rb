@@ -20,8 +20,12 @@ class Business < ApplicationRecord
     where(verified: false)
   }
 
+  scope :not_rejected, lambda {
+    where('verified = true OR verified IS NULL')
+  }
+
   def verified?
-    return 'CHECK' if verified.nil?
+    return 'PLEASE CHECK' if verified.nil?
 
     verified
   end
