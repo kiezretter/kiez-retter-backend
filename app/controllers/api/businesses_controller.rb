@@ -5,7 +5,7 @@ module Api
     respond_to :json
 
     def create
-      business_type = BusinessType.find_by(slug: params[:business_type])
+      business_type = BusinessType.find_by(slug: business_params[:business_type])
       business = Business.new(business_params.merge(business_type: business_type))
       if business.save!
         render json: business, status: :created
@@ -20,7 +20,7 @@ module Api
     end
 
     def index
-      @businesses = Business.all
+      @businesses = Business.not_rejected
     end
 
     private
