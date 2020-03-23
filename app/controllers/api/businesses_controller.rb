@@ -5,6 +5,7 @@ module Api
     respond_to :json
 
     def create
+      binding.pry
       business_type = BusinessType.find_by(slug: params[:business_type])
       business = Business.new(business_params.merge(business_type: business_type))
       if business.save!
