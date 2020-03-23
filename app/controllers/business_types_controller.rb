@@ -69,6 +69,6 @@ class BusinessTypesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def business_type_params
-      params.fetch(:business_type, {})
+      params.require(:business_type).permit(:name, :slug)
     end
 end

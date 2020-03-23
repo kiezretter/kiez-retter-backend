@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_21_234951) do
+ActiveRecord::Schema.define(version: 2020_03_22_193631) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(version: 2020_03_21_234951) do
   end
 
   create_table "businesses", force: :cascade do |t|
-    t.integer "gmap_id"
+    t.string "gmap_id"
     t.string "name"
     t.float "lat"
     t.float "lng"
@@ -113,5 +113,4 @@ ActiveRecord::Schema.define(version: 2020_03_21_234951) do
   add_foreign_key "donations", "businesses"
   add_foreign_key "owners", "businesses"
   add_foreign_key "passports", "owners"
-  add_foreign_key "trade_certificates", "owners", column: "business_id"
 end
