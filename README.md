@@ -164,7 +164,7 @@ Example:
         }
       },
       "trade_certificate_attributes": {
-        "trade_licence_image": {
+        "trade_license_image": {
           "data: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABPYA"
         }
       }

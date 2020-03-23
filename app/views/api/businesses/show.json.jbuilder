@@ -3,6 +3,7 @@
 json.business do 
   json.business_id @business.id
   json.gmap_id @business.gmap_id
+  json.name @business.name
   json.owner do
     json.first_name @owner.first_name
     json.last_name @owner.last_name
