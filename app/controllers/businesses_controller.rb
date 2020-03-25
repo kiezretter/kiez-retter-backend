@@ -3,62 +3,40 @@
 class BusinessesController < ApplicationController
   before_action :set_business, only: %i[show edit update destroy approve reject]
 
-  # GET /businesses
-  # GET /businesses.json
   def index
-    @businesses = Business.all
+    @businesses = Business.order(:created_at).reverse
   end
 
-  # GET /businesses/1
-  # GET /businesses/1.json
   def show; end
 
-  # GET /businesses/new
   def new
     @business = Business.new
   end
 
-  # GET /businesses/1/edit
   def edit; end
 
-  # POST /businesses
-  # POST /businesses.json
   def create
-    @business = Business.new(business_params)
+    params_w_geo = business_params.merge(geo_params)
+    @business = Business.new(params_w_geo)
 
-    respond_to do |format|
-      if @business.save
-        format.html { redirect_to @business, notice: 'Business was successfully created.' }
-        format.json { render :show, status: :created, location: @business }
-      else
-        format.html { render :new }
-        format.json { render json: @business.errors, status: :unprocessable_entity }
-      end
+    if @business.save
+      redirect_to @business, notice: 'Business was successfully created.'
+    else
+      render :new
     end
   end
 
-  # PATCH/PUT /businesses/1
-  # PATCH/PUT /businesses/1.json
   def update
-    respond_to do |format|
-      if @business.update(business_params)
-        format.html { redirect_to @business, notice: 'Business was successfully updated.' }
-        format.json { render :show, status: :ok, location: @business }
-      else
-        format.html { render :edit }
-        format.json { render json: @business.errors, status: :unprocessable_entity }
-      end
+    if @business.update(business_params)
+      redirect_to @business, notice: 'Business was successfully updated.'
+    else
+      render :edit
     end
   end
 
-  # DELETE /businesses/1
-  # DELETE /businesses/1.json
   def destroy
     @business.destroy
-    respond_to do |format|
-      format.html { redirect_to businesses_url, notice: 'Business was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to businesses_url, notice: 'Business was successfully destroyed.'
   end
 
   def approve
@@ -75,18 +53,34 @@ class BusinessesController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_business
     @business = Business.find(params[:id])
+  end
+
+  def address
+    "#{params[:business][:name]} #{params[:business][:street_address]} #{params[:business][:city]} #{params[:business][:postcode]}"
+  end
+
+  def geo_params
+    results = Geocoder.search(address)
+    coordinates = results.first.coordinates
+    place_id = results.first.place_id
+    { lat: coordinates[0], lng: coordinates[1], gmap_id: place_id }
   end
 
   def business_params
     params.require(:business).permit(
       :gmap_id, :name, :lat, :lng,
       :phone_number, :street_address, :postcode, :city,
-      :business_type,
-      :personal_message, :personal_thank_you,
-      owner_attributes: [:paypal_handle]
+      :business_type_id, :personal_message, :personal_thank_you,
+      :favorite_place_image,
+      owner_attributes: [
+        :id, :paypal_handle, :first_name, :last_name, :nick_name,
+        :email, :salutation, :owner_image, :id_card_image
+      ],
+      funding_attributes: [
+        :id, :link, :funding_type
+      ]
     )
   end
 end
