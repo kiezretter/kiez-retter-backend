@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-json.business do 
+json.business do
   json.business_id @business.id
   json.gmap_id @business.gmap_id
   json.name @business.name
@@ -21,4 +21,9 @@ json.business do
     json.city @business.city
   end
   json.verified @business.verified
+  json.funding do
+    json.funding_type @business.funding.funding_type
+    json.link @business.funding.link
+  end
+  json.image_references @business.image_references, :google_reference
 end

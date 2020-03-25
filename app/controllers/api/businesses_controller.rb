@@ -33,8 +33,8 @@ module Api
         :personal_message, :personal_thank_you,
         favorite_place_image: :data,
         owner_attributes: [
-          :email, :first_name, :last_name, :salutation, :nick_name, :paypal_handle,
-          owner_image: :data, id_card_image: :data
+          :email, :first_name, :last_name, :salutation, :nick_name,
+          :paypal_handle, owner_image: :data, id_card_image: :data
         ],
         trade_certificate_attributes: [
           trade_license_image: :data

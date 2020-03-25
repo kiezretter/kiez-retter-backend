@@ -1,13 +1,14 @@
 <%- model_class = Business -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
+  <h1><%= @business.name %></h1>
+  <h5>Verfified: <%= @business.verified? %></h5>
 </div>
 
 <dl class="dl-horizontal">
-  <dt><strong><%= model_class.human_attribute_name(:gmap_id) %>:</strong></dt>
-  <dd><%= @business.gmap_id %></dd>
-  <dt><strong>Business Name:</strong></dt>
-  <dd><%= @business.name %></dd>
+
+  <h5>Business</h5>
+  <dt><strong>Google Maps:</strong></dt>
+  <dd><a href="<%= "https://www.google.com/maps/place/?q=place_id:#{@business.gmap_id}" %>" target="_blank"><%= @business.gmap_id %></a></dd>
   <dt><strong>Business Type:</strong></dt>
   <dd><%= @business.business_type.name if @business.business_type %></dd>
   <dt><strong>Straße:</strong></dt>
@@ -16,33 +17,52 @@
   <dd><%= @business.city %></dd>
   <dt><strong>PLZ:</strong></dt>
   <dd><%= @business.postcode %></dd>
-  <dt><strong>E-Mail:</strong></dt>
-  <dd><%= @business.owner.email %></dd>
+
+  <h5>Owner</h5>
   <dt><strong>Besitzer Name:</strong></dt>
   <dd><%= @business.owner.full_name %></dd>
+  <dt><strong>E-Mail:</strong></dt>
+  <dd><%= @business.owner.email %></dd>
+  <dt><strong>Besitzer Spitzname:</strong></dt>
+  <dd><%= @business.owner.nick_name %></dd>
   <dt><strong>PayPal Link:</strong></dt>
-  <dd><%= link_to "https://paypal.me/#{@business.owner.paypal_handle}" %></dd>
+  <dd><a href="<%= "https://paypal.me/#{@business.owner.paypal_handle}" %>" target="_blank"><%= "https://paypal.me/#{@business.owner.paypal_handle}" %></a></dd>
   <dt><strong><%= model_class.human_attribute_name(:lat) %>:</strong></dt>
   <dd><%= @business.lat %></dd>
   <dt><strong><%= model_class.human_attribute_name(:lng) %>:</strong></dt>
   <dd><%= @business.lng %></dd>
-  <dt><strong>Gewerbeschein:</strong></dt>
-  <dd><%= link_to 'Link', attached_image_url(@business.trade_certificate.trade_license_image), target: '_blank' %></dd>
-  <dt><strong>Personalausweis:</strong></dt>
-  <dd><%= link_to 'Link', attached_image_url(@business.owner.id_card_image), target: '_blank' %></dd>
-    <dt><strong><%= model_class.human_attribute_name(:verified) %>:</strong></dt>
-  <dd><%= @business.verified? %></dd>
+  <% if @business.trade_certificate.present? %>
+    <dt><strong>Gewerbeschein:</strong></dt>
+    <dd><%= link_to 'Link', attached_image_url(@business.trade_certificate.trade_license_image), target: '_blank' %></dd>
+  <% end %>
+  <% if @business.owner.id_card_image.attached? %>
+    <dt><strong>Personalausweis:</strong></dt>
+    <dd><%= link_to 'Link', attached_image_url(@business.owner.id_card_image), target: '_blank' %></dd>
+  <% end %>
+
+  <% if @business.funding.present? %>
+    <h5>Funding</h5>
+    <dt><strong>Gutschein Link:</strong></dt>
+    <dd><a href="<%= @business.funding.link %>" target="_blank"><%= @business.funding.link %></a></dd>
+    <dt><strong>Funding Type:</strong></dt>
+    <dd><%= @business.funding.funding_type.humanize %></dd>
+  <% end %>
 </dl>
+
 <div>
   <% if @business.favorite_place_image.attached? %>
-    <%= image_tag attached_image_url(@business.favorite_place_image) %>
+    <h5>Place image</h5>
+    <%= image_tag attached_image_url(@business.favorite_place_image), width: 300 %>
   <% end %>
 </div>
+<br>
 <div>
-  <% if @business.owner.id_card_image.attached? %>
-    <%= image_tag attached_image_url(@business.owner.id_card_image) %>
+  <% if @business.owner.owner_image.attached? %>
+    <h5>Owner image</h5>
+    <%= image_tag attached_image_url(@business.owner.owner_image), width: 300 %>
   <% end %>
 </div>
+<br>
 
 <%= link_to 'Approve', approve_business_path(@business),
     method: :patch, class: 'btn btn-success btn-xs' %>

@@ -14,20 +14,13 @@
       </div>
     </div>
   <% end %>
-
+  <h4>Business</h4>
   <div class="form-group">
     <%= f.label :gmap_id, :class => 'control-label col-lg-2' %>
     <div class="col-lg-10">
       <%= f.text_field :gmap_id, :class => 'form-control' %>
     </div>
     <%=f.error_span(:gmap_id) %>
-  </div>
-  <div class="form-group">
-    <%= f.label :name, :class => 'control-label col-lg-2' %>
-    <div class="col-lg-10">
-      <%= f.text_field :name, :class => 'form-control' %>
-    </div>
-    <%=f.error_span(:name) %>
   </div>
   <div class="form-group">
     <%= f.label :lat, :class => 'control-label col-lg-2' %>
@@ -43,14 +36,114 @@
     </div>
     <%=f.error_span(:lng) %>
   </div>
-  <%= fields_for :owner, @business.owner do |owner_field| %>
+  <div class="form-group">
+    <%= f.label 'Name*', :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :name, :class => 'form-control', required: true %>
+    </div>
+    <%=f.error_span(:name) %>
+  </div>
+  <div class="form-group">
+    <%= f.label 'Address*', :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :street_address, :class => 'form-control', required: true %>
+    </div>
+    <%=f.error_span(:street_address) %>
+  </div>
+  <div class="form-group">
+    <%= f.label 'Postcode*', :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :postcode, :class => 'form-control', required: true %>
+    </div>
+    <%=f.error_span(:postcode) %>
+  </div>
+  <div class="form-group">
+    <%= f.label 'City*', :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :city, :class => 'form-control', required: true %>
+    </div>
+    <%=f.error_span(:city) %>
+  </div>
+  <div class="form-group">
+    <%= f.label :phone_number, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :phone_number, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:phone_number) %>
+  </div>
+  <div class="form-group">
+    <%= f.label 'Business Type*', :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.collection_select(:business_type_id, BusinessType.all, :id, :name, required: true, prompt: true) %>
+    </div>
+    <%=f.error_span(:business_type) %>
+  </div>
+  <br>
+  <h4>Owner</h4>
+  <%= f.fields_for :owner, (@business.owner ||= Owner.new) do |owner_field| %>
     <div class="form-group">
-      <%= f.label :paypal_handle, :class => 'control-label col-lg-2' %>
+      <%= owner_field.label :paypal_handle, :class => 'control-label col-lg-2' %>
       <div class="col-lg-10">
         <%= owner_field.text_field :paypal_handle, class: 'form-control' %>
       </div>
     </div>
+    <div class="form-group">
+      <%= owner_field.label :email, :class => 'control-label col-lg-2' %>
+      <div class="col-lg-10">
+        <%= owner_field.text_field :email, class: 'form-control' %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= owner_field.label :first_name, :class => 'control-label col-lg-2' %>
+      <div class="col-lg-10">
+        <%= owner_field.text_field :first_name, class: 'form-control' %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= owner_field.label :last_name, :class => 'control-label col-lg-2' %>
+      <div class="col-lg-10">
+        <%= owner_field.text_field :last_name, class: 'form-control' %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= owner_field.label :nick_name, :class => 'control-label col-lg-2' %>
+      <div class="col-lg-10">
+        <%= owner_field.text_field :nick_name, class: 'form-control' %>
+      </div>
+    </div>
   <% end %>
+  <br>
+  <h4>Funding</h4>
+  <%= f.fields_for :funding, (@business.funding ||= Funding.new) do |funding_field| %>
+    <div class="form-group">
+      <%= funding_field.label :link, :class => 'control-label col-lg-2' %>
+      <div class="col-lg-10">
+        <%= funding_field.text_field :link, class: 'form-control' %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= funding_field.label :funding_type, :class => 'control-label col-lg-2' %>
+      <div class="col-lg-10">
+        <%= funding_field.select :funding_type, Funding.funding_types.keys.to_a, class: 'form-control' %>
+      </div>
+    </div>
+  <% end %>
+  <br>
+  <h4>Message</h4>
+  <div class="form-group">
+    <%= f.label :personal_message, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_area :personal_message, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:personal_message) %>
+  </div>
+  <div class="form-group">
+    <%= f.label :personal_thank_you, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_area :personal_thank_you, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:personal_thank_you) %>
+  </div>
   <div class="form-group">
     <div class="col-lg-offset-2 col-lg-10">
       <%= f.submit nil, :class => 'btn btn-primary' %>
