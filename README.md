@@ -1,4 +1,17 @@
-﻿# Query Registered Businesses in the Vicinity
+﻿
+# Location Type Mapping
+
+| Name   | Icon Usage                                        | slug      |
+|--------|---------------------------------------------------|-----------|
+| Kneipe | Spendenicons (in drei verschiedenen Größen): Bier | bar       |
+| Club   | Spendenicons: Cocktailgläser                      | club      |
+| Späti  | Spendenicons: Schokolade - Bier                   | late_shop |
+|Restaurant | Spendenicons: Vorspeise, Hauptspeise, Dessert | restaurant |
+|Café | Spendenicons: Kaffee | cafe |
+|Einzelhandel | Münzen & Geldscheine | shop |
+|Dienstleistung | Münzen & Geldscheine | service |
+
+# Query Registered Businesses in the Vicinity
 
 The frontend sends a location and the backend returns a list of registered businesses in the vicinity  
 with their respective id, name and location, and the information, whether the business has already been verified.
@@ -77,7 +90,8 @@ Owner details
 * personal message
 * personal thank you
 * paypal handle (for now paypal.me link after http://paypal.me/)
-* image(s)
+* one image of the business
+* optionally one image of the owner
 
 Example:
 ```
@@ -88,9 +102,13 @@ Example:
       "message": "Spende ein halbes Bier!",
       "thank_you": "Danke!",
       "paypal": "feuermelder",
-      "images": []
+      "business_type: "bar",
+      "favorite_place_image": "https://kiezretter.imgix.net/h93e6a8zg0tmjmpusqxo2x0hntic?ixlib=rails-4.0.0",
+      "owner_image": "https://kiezretter.imgix.net/h93e6a8zg0tmjmpusqxo2x0hntic?ixlib=rails-4.0.0"
     }
 ```
+
+The image URLs can be modified in order to return different dimensions (and much more). See the [Imgix API reference](https://docs.imgix.com/apis/url) for details.
 
 ## Failure Return Value
 
@@ -112,6 +130,7 @@ All necessary information to register and verify a new company is sent to the ba
 ## Parameters
 
 Business and owner details plus documents for verification. `business_type_id` still has to receive a mapping
+Images are transferred using base64 encoding.
 
 Example:
 ```
@@ -126,14 +145,28 @@ Example:
       "city": "Berlin",
       "personal_message": "Spende ein halbes Bier!",
       "personal_thank_you": "Danke!",
-      "business_type_id": 1,
-      "owner": {
+      "business_type": "bar",
+      "favorite_place_image": { 
+        "data": "data:image/png;base64,iVBORw" 
+      },
+      "owner_attributes": {
         "email": "hello@world.de",
         "first_name": "Mein",
         "last_name": "Name",
         "salutation": "Mr.",
         "nick_name": "Worldwide",
-        "paypal_handle": "robinzuschke"
+        "paypal_handle": "robinzuschke",
+        "owner_image": { 
+          "data": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABPYA" 
+        },
+        "id_card_image": {
+          "data": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABPYA"
+        }
+      },
+      "trade_certificate_attributes": {
+        "trade_license_image": {
+          "data: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABPYA"
+        }
       }
     }
 ```

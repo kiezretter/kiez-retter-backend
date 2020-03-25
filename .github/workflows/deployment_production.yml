@@ -13,7 +13,7 @@ jobs:
       - uses: chrislennon/action-aws-cli@v1.1
 
       - name: Build image
-        run: docker build -t 647713163217.dkr.ecr.eu-central-1.amazonaws.com/kiez-retter-backend:latest .
+        run: docker build --build-arg RAILS_MASTER_KEY -t 647713163217.dkr.ecr.eu-central-1.amazonaws.com/kiez-retter-backend:production .
         env:
           RAILS_MASTER_KEY: ${{secrets.RAILS_MASTER_KEY}}
 
@@ -24,7 +24,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Push image
-        run: docker push 647713163217.dkr.ecr.eu-central-1.amazonaws.com/kiez-retter-backend:latest
+        run: docker push 647713163217.dkr.ecr.eu-central-1.amazonaws.com/kiez-retter-backend:production
 
       - name: Force new deployment
         run: aws ecs update-service --cluster kiez-retter-backend --service kiezretter-backend-production --force-new-deployment --region eu-central-1

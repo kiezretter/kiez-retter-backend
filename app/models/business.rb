@@ -5,7 +5,8 @@ class Business < ApplicationRecord
   has_one :trade_certificate, dependent: :destroy
   has_many :donations, dependent: :destroy
   belongs_to :business_type
-  accepts_nested_attributes_for :owner
+  accepts_nested_attributes_for :owner, :trade_certificate
+  has_one_base64_attached :favorite_place_image
 
   scope :not_yet_verified, lambda {
     where(verified: nil)
@@ -19,8 +20,12 @@ class Business < ApplicationRecord
     where(verified: false)
   }
 
+  scope :not_rejected, lambda {
+    where('verified = true OR verified IS NULL')
+  }
+
   def verified?
-    return 'CHECK' if verified.nil?
+    return 'PLEASE CHECK' if verified.nil?
 
     verified
   end
