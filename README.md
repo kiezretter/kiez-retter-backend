@@ -117,11 +117,11 @@ Example:
             "city": "Berlin"
         },
         "verified": null,
-        "funding": {
+        "funding": {          // Optional. Only if present
             "funding_type": "voucher",
             "link": "https://app.atento.me/merchants/1420"
         },
-        "image_references": [
+        "image_references": [         // Optional. Only if present
             {
                 "google_reference": "CmRaAAAARN7khkPL0k3k7hepCTizmi7rNot9WC351cvCAwtsw6Qzq-ftYjahtMKgKjZOGL4xRj5bBWDZOrQN7CFAdm61fM_Rf1f1sWxBbGC5UR5BGfJ8Qk4gGndTK3S5Ezvo9SQiEhCgqYlyS9h4NibVmXnKOomMGhRJeoH1ve9eDf1xKuqeOQv7AlMeqA"
             },
