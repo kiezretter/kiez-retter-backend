@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_22_193631) do
+ActiveRecord::Schema.define(version: 2020_03_25_220525) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,6 +81,23 @@ ActiveRecord::Schema.define(version: 2020_03_22_193631) do
     t.index ["business_id"], name: "index_donations_on_business_id"
   end
 
+  create_table "fundings", force: :cascade do |t|
+    t.string "link"
+    t.bigint "business_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "funding_type"
+    t.index ["business_id"], name: "index_fundings_on_business_id"
+  end
+
+  create_table "image_references", force: :cascade do |t|
+    t.string "google_reference"
+    t.bigint "business_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["business_id"], name: "index_image_references_on_business_id"
+  end
+
   create_table "owners", force: :cascade do |t|
     t.bigint "business_id", null: false
     t.string "email"
@@ -111,6 +128,8 @@ ActiveRecord::Schema.define(version: 2020_03_22_193631) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "businesses", "business_types"
   add_foreign_key "donations", "businesses"
+  add_foreign_key "fundings", "businesses"
+  add_foreign_key "image_references", "businesses"
   add_foreign_key "owners", "businesses"
   add_foreign_key "passports", "owners"
 end
