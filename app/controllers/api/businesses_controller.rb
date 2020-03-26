@@ -19,8 +19,20 @@ module Api
       @owner = @business.owner
     end
 
+    DistanceInKm = 10.0 # could be an api parameter
+    KMperDegree = 111.045
+    DistanceLatInDegrees = DistanceInKm / KMperDegree
+
     def index
-      @businesses = Business.not_rejected
+      lat = params[:lat].to_f
+      lng = params[:lng].to_f
+      minLat = lat - DistanceLatInDegrees
+      maxLat = lat + DistanceLatInDegrees
+      distanceLngInDegrees = DistanceLatInDegrees * Math.cos(lat * Math::PI / 180.0)
+      minLng = lng - distanceLngInDegrees
+      maxLng = lng + distanceLngInDegrees
+      @businesses = Business.where('(verified = true OR verified IS NULL) AND (lat BETWEEN ? AND  ?) AND (lng BETWEEN ? AND ?)',
+                                    minLat, maxLat, minLng, maxLng)
     end
 
     private
