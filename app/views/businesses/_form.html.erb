@@ -124,7 +124,7 @@
     <div class="form-group">
       <%= funding_field.label :funding_type, :class => 'control-label col-lg-2' %>
       <div class="col-lg-10">
-        <%= funding_field.select :funding_type, Funding.funding_types.keys.to_a, class: 'form-control' %>
+        <%= funding_field.select :funding_type, Funding.funding_types.keys.to_a, class: 'form-control', prompt: true %>
       </div>
     </div>
   <% end %>

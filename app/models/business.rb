@@ -6,12 +6,11 @@ class Business < ApplicationRecord
   has_one :funding
   accepts_nested_attributes_for :owner, :trade_certificate, :funding
   has_many :donations, dependent: :destroy
-  has_one :funding
   belongs_to :business_type
   has_one_base64_attached :favorite_place_image
   has_many :image_references
 
-  after_save :create_image_ref
+  after_save :create_image_ref, :destroy_funding_if_empty
 
   scope :not_yet_verified, lambda {
     where(verified: nil)
@@ -36,6 +35,10 @@ class Business < ApplicationRecord
   end
 
   private
+
+  def destroy_funding_if_empty
+    funding.destroy! if funding.link.blank? && funding.funding_type.nil?
+  end
 
   def create_image_ref
     return unless image_references.none?
