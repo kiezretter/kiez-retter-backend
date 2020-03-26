@@ -11,7 +11,7 @@ class Business < ApplicationRecord
   has_one_base64_attached :favorite_place_image
   has_many :image_references
 
-  after_create :create_image_ref
+  after_save :create_image_ref
 
   scope :not_yet_verified, lambda {
     where(verified: nil)
@@ -38,7 +38,12 @@ class Business < ApplicationRecord
   private
 
   def create_image_ref
-    fetch_image_details_from_google.map do |image_ref|
+    return unless image_references.none?
+
+    image_references = fetch_image_details_from_google
+    return if image_references.nil?
+
+    image_references.map do |image_ref|
       ImageReference.create!(google_reference: image_ref, business: self)
     end
   end
@@ -46,7 +51,10 @@ class Business < ApplicationRecord
   def fetch_image_details_from_google
     url = "https://maps.googleapis.com/maps/api/place/details/json?key=#{Rails.application.credentials.dig(:google_api_key)}&place_id=#{gmap_id}"
     response = http_request(url)
-    JSON.parse(response.body)['result']['photos'][0..1].map { |photo| photo['photo_reference'] }
+    result = JSON.parse(response.body)['result']
+    return nil if result['photos'].nil?
+
+    result['photos'][0..1].map { |photo| photo['photo_reference'] }
   end
 
   def http_request(url)

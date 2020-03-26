@@ -16,7 +16,6 @@ class BusinessesController < ApplicationController
   def edit; end
 
   def create
-    params_w_geo = business_params.merge(geo_params)
     @business = Business.new(params_w_geo)
 
     if @business.save
@@ -27,7 +26,7 @@ class BusinessesController < ApplicationController
   end
 
   def update
-    if @business.update(business_params)
+    if @business.update(params_w_geo)
       redirect_to @business, notice: 'Business was successfully updated.'
     else
       render :edit
@@ -55,6 +54,10 @@ class BusinessesController < ApplicationController
 
   def set_business
     @business = Business.find(params[:id])
+  end
+
+  def params_w_geo
+    business_params.merge(geo_params)
   end
 
   def address
