@@ -9,6 +9,8 @@
   <h5>Business</h5>
   <dt><strong>Google Maps:</strong></dt>
   <dd><a href="<%= "https://www.google.com/maps/place/?q=place_id:#{@business.gmap_id}" %>" target="_blank"><%= @business.gmap_id %></a></dd>
+  <dt><strong>Business Id:</strong></dt>
+  <dd><%= @business.id %></dd>
   <dt><strong>Business Type:</strong></dt>
   <dd><%= @business.business_type.name if @business.business_type %></dd>
   <dt><strong>Straße:</strong></dt>
