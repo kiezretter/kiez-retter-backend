@@ -95,17 +95,42 @@ Owner details
 
 Example:
 ```
-    {
-      "business_id": 1, 
-      "gmap_id": "huisdfhuias7sadyf7s8dyd",
-      "nick_name": "Feuermelder",        
-      "message": "Spende ein halbes Bier!",
-      "thank_you": "Danke!",
-      "paypal": "feuermelder",
-      "business_type: "bar",
-      "favorite_place_image": "https://kiezretter.imgix.net/h93e6a8zg0tmjmpusqxo2x0hntic?ixlib=rails-4.0.0",
-      "owner_image": "https://kiezretter.imgix.net/h93e6a8zg0tmjmpusqxo2x0hntic?ixlib=rails-4.0.0"
+{
+    "business": {
+        "business_id": 95,
+        "gmap_id": "ChIJ76KkCoxRqEcRklhSCLoSBug",
+        "name": "Nanum",
+        "owner": {
+            "first_name": "Foo",
+            "last_name": "Bar",
+            "nick_name": "Nicky",
+            "image": null,
+            "paypal": "nickyfoo"
+        },
+        "message": "An all Lieben, wir brauchen euch!",
+        "thank_you": "Danke!",
+        "business_type": "club",
+        "favorite_place_image": null,
+        "address": {
+            "street_address": "Lindenstraße 90",
+            "postcode": "10969",
+            "city": "Berlin"
+        },
+        "verified": null,
+        "funding": {
+            "funding_type": "voucher",
+            "link": "https://app.atento.me/merchants/1420"
+        },
+        "image_references": [
+            {
+                "google_reference": "CmRaAAAARN7khkPL0k3k7hepCTizmi7rNot9WC351cvCAwtsw6Qzq-ftYjahtMKgKjZOGL4xRj5bBWDZOrQN7CFAdm61fM_Rf1f1sWxBbGC5UR5BGfJ8Qk4gGndTK3S5Ezvo9SQiEhCgqYlyS9h4NibVmXnKOomMGhRJeoH1ve9eDf1xKuqeOQv7AlMeqA"
+            },
+            {
+                "google_reference": "CmRaAAAAAV0-8buNZaegfy6RTnkhD6hHVrrhu4zOln85As3DkAKC2wUO7cZWgdxmPeKfYN2C9L6IfY60N0KxHS4E4-FsdRGvnC1tJXVOY6-QyRwStzHzG6p3-qOxRfX6tBk2Bj0xEhBcEeehZHTGuEehV0udT0nAGhSkyJHxp2QlViP8UH1GyUTY--bzog"
+            }
+        ]
     }
+}
 ```
 
 The image URLs can be modified in order to return different dimensions (and much more). See the [Imgix API reference](https://docs.imgix.com/apis/url) for details.
