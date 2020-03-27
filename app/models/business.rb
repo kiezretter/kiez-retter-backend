@@ -37,6 +37,8 @@ class Business < ApplicationRecord
   private
 
   def destroy_funding_if_empty
+    return unless funding.present?
+
     funding.destroy! if funding.link.blank? && funding.funding_type.nil?
   end
 
