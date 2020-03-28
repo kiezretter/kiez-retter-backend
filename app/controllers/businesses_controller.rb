@@ -4,7 +4,7 @@ class BusinessesController < ApplicationController
   before_action :set_business, only: %i[show edit update destroy approve reject]
 
   def index
-    @businesses = Business.order(:created_at).reverse
+    @businesses = Business.order(created_at: :desc).includes(:owner)
   end
 
   def show; end

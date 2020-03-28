@@ -29,7 +29,7 @@ class Business < ApplicationRecord
   }
 
   def verified?
-    return 'PLEASE CHECK' if verified.nil?
+    return 'PLEASE CHECK' if verified.nil? && (owner.nil || !owner.paypal_handle.empty?)
 
     verified
   end
