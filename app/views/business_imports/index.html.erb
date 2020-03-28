@@ -6,6 +6,8 @@
   <thead>
     <tr>
       <th><%= model_class.human_attribute_name(:id) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%= model_class.human_attribute_name(:import_error) %></th>
       <th><%= model_class.human_attribute_name(:imported_at) %></th>
       <th><%= model_class.human_attribute_name(:num_imported) %></th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
@@ -15,6 +17,8 @@
     <% @business_imports.each do |business_import| %>
       <tr>
         <td><%= link_to business_import.id, business_import_path(business_import) %></td>
+        <td><%= business_import.created_at %></td>
+        <td><%= truncate(business_import.import_error, length: 50) %></td>
         <td><%= business_import.imported_at %></td>
         <td><%= business_import.num_imported %></td>
         <td>

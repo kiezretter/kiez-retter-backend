@@ -4,10 +4,14 @@
 </div>
 
 <dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:created_at) %>:</strong></dt>
+  <dd><%= @business_import.created_at %></dd>
   <dt><strong><%= model_class.human_attribute_name(:imported_at) %>:</strong></dt>
   <dd><%= @business_import.imported_at %></dd>
   <dt><strong><%= model_class.human_attribute_name(:num_imported) %>:</strong></dt>
   <dd><%= @business_import.num_imported %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:import_error) %>:</strong></dt>
+  <dd><%= @business_import.import_error %></dd>
   <dt><strong><%= model_class.human_attribute_name(:content) %>:</strong></dt>
   <dd><pre><%= @business_import.content %></pre></dd>
 </dl>
