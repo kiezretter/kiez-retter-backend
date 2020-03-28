@@ -19,6 +19,8 @@ json.business do
     json.street_address @business.street_address
     json.postcode @business.postcode
     json.city @business.city
+    json.lat @business.lat
+    json.lng @business.lng
   end
   json.verified @business.verified
   if @business.funding
