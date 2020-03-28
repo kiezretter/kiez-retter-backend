@@ -8,35 +8,35 @@ type = BusinessType.create!(
   slug: 'bar'
 )
 BusinessType.create!([
-  {
-    name: 'Bar',
-    slug: 'bar'
-  },
-  {
-    name: 'Club',
-    slug: 'club'
-  },
-  {
-    name: 'Späti',
-    slug: 'late_shop'
-  },
-  {
-    name: 'Restaurant',
-    slug: 'restaurant'
-  },
-  {
-    name: 'Cafe',
-    slug: 'cafe'
-  },
-  {
-    name: 'Einzelhandel',
-    slug: 'shop'
-  },
-  {
-    name: 'Dienstleistung',
-    slug: 'service'
-  },
-])
+                       {
+                         name: 'Bar',
+                         slug: 'bar'
+                       },
+                       {
+                         name: 'Club',
+                         slug: 'club'
+                       },
+                       {
+                         name: 'Späti',
+                         slug: 'late_shop'
+                       },
+                       {
+                         name: 'Restaurant',
+                         slug: 'restaurant'
+                       },
+                       {
+                         name: 'Cafe',
+                         slug: 'cafe'
+                       },
+                       {
+                         name: 'Einzelhandel',
+                         slug: 'shop'
+                       },
+                       {
+                         name: 'Dienstleistung',
+                         slug: 'service'
+                       }
+                     ])
 
 puts 'Creating businesses and owners'
 

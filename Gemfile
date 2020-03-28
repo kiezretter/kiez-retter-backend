@@ -5,10 +5,13 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.6.5'
 
+gem 'active_storage_base64'
 gem 'aws-sdk-s3', require: false
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'devise'
 gem 'devise-bootstrap-views', '~> 1.0'
+gem 'geocoder'
+gem 'imgix-rails', '~> 4.0.0'
 gem 'jbuilder', '~> 2.7'
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 4.1'
@@ -19,8 +22,6 @@ gem 'sentry-raven'
 gem 'turbolinks', '~> 5'
 gem 'twitter-bootstrap-rails'
 gem 'webpacker', '~> 4.0'
-gem 'imgix-rails', '~> 4.0.0'
-gem 'active_storage_base64'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
