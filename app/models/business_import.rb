@@ -5,14 +5,9 @@ class BusinessImport < ApplicationRecord
 
   validates :content, presence: true
 
-  def imported!(count)
-    self.imported_at = Time.now
-    self.save!
-  end
-
-  def errored!(exception)
-    self.import_error = exception.inspect
-    self.save!
+  def errored(name, exception)
+    self.import_error ||= ""
+    self.import_error += "#{name}: #{exception.inspect}\n"
   end
 
   def imported?
