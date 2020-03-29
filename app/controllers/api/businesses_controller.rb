@@ -25,6 +25,9 @@ module Api
     end
 
     def index
+      @businesses = Business
+        .where('(verified = true OR verified IS NULL)')
+
       if params[:north]
         min_lat = params[:south].to_f - ADDITIONAL_RANGE_IN_DEGREES
         max_lat = params[:north].to_f + ADDITIONAL_RANGE_IN_DEGREES
@@ -32,13 +35,12 @@ module Api
         distance_lng_in_degrees = ADDITIONAL_RANGE_IN_DEGREES * Math.cos(lat_range * Math::PI / 180.0)
         min_lng = params[:west].to_f - distance_lng_in_degrees
         max_lng = params[:east].to_f + distance_lng_in_degrees
-        @businesses = Business
-          .where('(verified = true OR verified IS NULL)')
+        @businesses
           .where('(lat BETWEEN ? AND  ?) AND (lng BETWEEN ? AND ?)', min_lat, max_lat, min_lng, max_lng)
       else
         # Fallback for when frontend is still using the old API
         # Note to team: we should probably think about API versioning in the future
-        @businesses = Business.all.limit(100)
+        @businesses = @businesses.limit(100)
       end
     end
 
