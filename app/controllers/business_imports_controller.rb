@@ -11,6 +11,7 @@ class BusinessImportsController < ApplicationController
     @business_import = BusinessImport.new(business_import_params)
 
     if @business_import.save
+      ImportBusinessesJob.perform_later @business_import
       redirect_to @business_import, notice: 'Business import was successfully created.'
     else
       render :new
