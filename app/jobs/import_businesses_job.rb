@@ -5,10 +5,15 @@ class ImportBusinessesJob < ApplicationJob
     begin
       csv = CSV.parse(business_import.content.strip, headers: true)
       service = BusinessType.find_by(slug: 'service')
+      business_type_mapping = Hash[*
+        BusinessType
+          .pluck(:slug, :id)
+          .flatten
+      ]
       csv.each do |row|
         row_form = row.to_hash
         b = Business.create!({
-          business_type: service,
+          business_type_id: business_type_mapping[row_form['business_type']],
           name: row_form['name'],
           street_address: row_form['street_address'],
           postcode: row_form['postcode'],
