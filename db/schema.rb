@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_28_190858) do
+ActiveRecord::Schema.define(version: 2020_03_29_172219) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,10 +51,10 @@ ActiveRecord::Schema.define(version: 2020_03_28_190858) do
   create_table "business_imports", force: :cascade do |t|
     t.text "content"
     t.datetime "imported_at"
-    t.integer "num_imported"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.text "import_error"
+    t.integer "business_count"
   end
 
   create_table "business_types", force: :cascade do |t|
@@ -79,7 +79,10 @@ ActiveRecord::Schema.define(version: 2020_03_28_190858) do
     t.text "personal_message"
     t.text "personal_thank_you"
     t.bigint "business_type_id", null: false
+    t.bigint "business_import_id"
+    t.index ["business_import_id"], name: "index_businesses_on_business_import_id"
     t.index ["business_type_id"], name: "index_businesses_on_business_type_id"
+    t.index ["lat", "lng"], name: "index_businesses_on_lat_lng"
   end
 
   create_table "donations", force: :cascade do |t|
@@ -135,6 +138,7 @@ ActiveRecord::Schema.define(version: 2020_03_28_190858) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "businesses", "business_imports"
   add_foreign_key "businesses", "business_types"
   add_foreign_key "donations", "businesses"
   add_foreign_key "fundings", "businesses"

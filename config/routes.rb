@@ -11,7 +11,11 @@ Rails.application.routes.draw do
         patch :reject
       end
     end
-    resources :business_imports, except: [:edit, :update]
+    resources :business_imports, except: [:edit, :update] do
+      member do
+        delete :destroy_businesses
+      end
+    end
   end
 
   namespace 'api', defaults: { format: :json } do

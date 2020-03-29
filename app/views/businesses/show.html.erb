@@ -19,6 +19,10 @@
   <dd><%= @business.city %></dd>
   <dt><strong>PLZ:</strong></dt>
   <dd><%= @business.postcode %></dd>
+  <% if @business.business_import -%>
+    <dt><strong>aus Import:</strong></dt>
+    <dd><%= link_to @business.business_import.id, business_import_url(@business.business_import) %></dd>
+  <% end -%>
 
   <h5>Owner</h5>
   <dt><strong>Besitzer Name:</strong></dt>

@@ -1,11 +1,12 @@
 require 'csv'
 
 class BusinessImport < ApplicationRecord
+  has_many :businesses
+
   validates :content, presence: true
 
   def imported!(count)
     self.imported_at = Time.now
-    self.num_imported = count
     self.save!
   end
 
@@ -16,5 +17,13 @@ class BusinessImport < ApplicationRecord
 
   def imported?
     !!imported_at
+  end
+
+  def destroy_businesses
+    businesses.destroy_all
+  end
+
+  def num_imported
+    businesses.count
   end
 end

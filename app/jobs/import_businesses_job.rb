@@ -17,7 +17,8 @@ class ImportBusinessesJob < ApplicationJob
           name: row_form['name'],
           street_address: row_form['street_address'],
           postcode: row_form['postcode'],
-          city: row_form['city']
+          city: row_form['city'],
+          business_import: business_import
         }.merge(
           geo_params(row_form['name'], row_form['street'], row_form['city'], row_form['postcode'])
         ))
@@ -35,8 +36,10 @@ class ImportBusinessesJob < ApplicationJob
 
   def geo_params(name, street, city, postcode)
     results = Geocoder.search("#{name} #{street} #{city} #{postcode}")
-    coordinates = results.first.coordinates
-    place_id = results.first.place_id
-    { lat: coordinates[0], lng: coordinates[1], gmap_id: place_id }
+    if results.one?
+      coordinates = results.first.coordinates
+      place_id = results.first.place_id
+      { lat: coordinates[0], lng: coordinates[1], gmap_id: place_id }
+    end
   end
 end

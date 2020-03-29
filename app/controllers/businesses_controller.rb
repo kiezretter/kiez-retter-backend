@@ -4,7 +4,14 @@ class BusinessesController < ApplicationController
   before_action :set_business, only: %i[show edit update destroy approve reject]
 
   def index
-    @businesses = Business.order(:created_at).reverse
+    @businesses = Business
+      .order(created_at: :desc)
+
+    if params[:business_import_id]
+      @business_import = BusinessImport.find params[:business_import_id]
+      @businesses = @businesses
+        .where(business_import_id: @business_import)
+    end
   end
 
   def show; end

@@ -3,12 +3,13 @@
 class Business < ApplicationRecord
   has_one :owner, dependent: :destroy
   has_one :trade_certificate, dependent: :destroy
-  has_one :funding
+  has_one :funding, dependent: :destroy
   accepts_nested_attributes_for :owner, :trade_certificate, :funding
   has_many :donations, dependent: :destroy
   belongs_to :business_type
   has_one_base64_attached :favorite_place_image
-  has_many :image_references
+  has_many :image_references, dependent: :destroy
+  belongs_to :business_import, counter_cache: :business_count
 
   validates :name, :street_address, :postcode, :city, :business_type, :lat, :lng, :gmap_id, presence: true
 
