@@ -35,7 +35,7 @@ module Api
         distance_lng_in_degrees = ADDITIONAL_RANGE_IN_DEGREES * Math.cos(lat_range * Math::PI / 180.0)
         min_lng = params[:west].to_f - distance_lng_in_degrees
         max_lng = params[:east].to_f + distance_lng_in_degrees
-        @businesses
+        @businesses = @businesses
           .where('(lat BETWEEN ? AND  ?) AND (lng BETWEEN ? AND ?)', min_lat, max_lat, min_lng, max_lng)
       end
     end
