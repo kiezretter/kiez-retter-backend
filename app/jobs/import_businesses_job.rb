@@ -1,8 +1,21 @@
 class ImportBusinessesJob < ApplicationJob
   queue_as :default
 
+  COLUMNS = %w[business_type city name postcode street_address url]
+
   def perform(business_import)
     csv = CSV.parse(business_import.content.strip, headers: true)
+    if !csv.headers
+      business_import.import_error = 'Header line is missing'
+      business_import.save!
+      return
+    end
+    if (COLUMNS - csv.headers).any?
+      business_import.import_error = 'Columns do not match requirements'
+      business_import.save!
+      return
+    end
+
     service = BusinessType.find_by(slug: 'service')
     business_type_mapping = Hash[*
       BusinessType
