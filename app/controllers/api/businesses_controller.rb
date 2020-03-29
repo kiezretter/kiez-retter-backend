@@ -2,10 +2,8 @@
 
 module Api
   class BusinessesController < ApplicationController
-    # FIXME This should probably depend on the current map zoom level
-    ADDITIONAL_RANGE_IN_KM = 2.0 
-    KM_PER_DEGREE = 111.045
-    ADDITIONAL_RANGE_IN_DEGREES = ADDITIONAL_RANGE_IN_KM / KM_PER_DEGREE
+
+    PERCENTAL_RANGE_EXTENSION = 0.2
 
     respond_to :json
 
@@ -29,14 +27,19 @@ module Api
         .where('(verified = true OR verified IS NULL)')
 
       if params[:north]
-        min_lat = params[:south].to_f - ADDITIONAL_RANGE_IN_DEGREES
-        max_lat = params[:north].to_f + ADDITIONAL_RANGE_IN_DEGREES
-        lat_range = max_lat - min_lat
-        distance_lng_in_degrees = ADDITIONAL_RANGE_IN_DEGREES * Math.cos(lat_range * Math::PI / 180.0)
-        min_lng = params[:west].to_f - distance_lng_in_degrees
-        max_lng = params[:east].to_f + distance_lng_in_degrees
+        # FIXME: works only in the northern hemisphere if the map does not contain the null meridian
+        min_lat = params[:south].to_f
+        max_lat = params[:north].to_f
+        add_lat = (max_lat - min_lat) * PERCENTAL_RANGE_EXTENSION / 2
+        min_lat -= add_lat
+        max_lat += add_lat
+        min_lng = params[:west].to_f
+        max_lng = params[:east].to_f
+        add_lng = (max_lng - min_lng) * PERCENTAL_RANGE_EXTENSION / 2
+        min_lng -= add_lng
+        max_lng += add_lng
         @businesses = @businesses
-          .where('(lat BETWEEN ? AND  ?) AND (lng BETWEEN ? AND ?)', min_lat, max_lat, min_lng, max_lng)
+          .where('(lat BETWEEN ? AND ?) AND (lng BETWEEN ? AND ?)', min_lat, max_lat, min_lng, max_lng)
       end
     end
 
