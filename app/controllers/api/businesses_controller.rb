@@ -37,10 +37,6 @@ module Api
         max_lng = params[:east].to_f + distance_lng_in_degrees
         @businesses
           .where('(lat BETWEEN ? AND  ?) AND (lng BETWEEN ? AND ?)', min_lat, max_lat, min_lng, max_lng)
-      else
-        # Fallback for when frontend is still using the old API
-        # Note to team: we should probably think about API versioning in the future
-        @businesses = @businesses.limit(100)
       end
     end
 
