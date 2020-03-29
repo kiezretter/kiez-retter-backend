@@ -20,7 +20,7 @@ class ImportBusinessesJob < ApplicationJob
         Owner.create!(business: b, paypal_handle: '', email: '', nick_name: '', first_name: '', last_name: '')
       end
 
-      business_import.imported!(csv.count - 2)
+      business_import.imported!(csv.count)
     rescue => e
       business_import.errored!(e)
     end
