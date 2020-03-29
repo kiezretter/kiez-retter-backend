@@ -2,6 +2,11 @@
 
 module Api
   class BusinessesController < ApplicationController
+    # FIXME This should probably depend on the current map zoom level
+    ADDITIONAL_RANGE_IN_KM = 2.0 
+    KM_PER_DEGREE = 111.045
+    ADDITIONAL_RANGE_IN_DEGREES = ADDITIONAL_RANGE_IN_KM / KM_PER_DEGREE
+
     respond_to :json
 
     def create
@@ -19,20 +24,22 @@ module Api
       @owner = @business.owner
     end
 
-    DistanceInKm = 10.0 # could be an api parameter
-    KMperDegree = 111.045
-    DistanceLatInDegrees = DistanceInKm / KMperDegree
-
     def index
-      lat = params[:lat].to_f
-      lng = params[:lng].to_f
-      minLat = lat - DistanceLatInDegrees
-      maxLat = lat + DistanceLatInDegrees
-      distanceLngInDegrees = DistanceLatInDegrees * Math.cos(lat * Math::PI / 180.0)
-      minLng = lng - distanceLngInDegrees
-      maxLng = lng + distanceLngInDegrees
-      @businesses = Business.where('(verified = true OR verified IS NULL) AND (lat BETWEEN ? AND  ?) AND (lng BETWEEN ? AND ?)',
-                                    minLat, maxLat, minLng, maxLng)
+      if params[:north]
+        min_lat = params[:south].to_f - ADDITIONAL_RANGE_IN_DEGREES
+        max_lat = params[:north].to_f + ADDITIONAL_RANGE_IN_DEGREES
+        lat_range = max_lat - min_lat
+        distance_lng_in_degrees = ADDITIONAL_RANGE_IN_DEGREES * Math.cos(lat_range * Math::PI / 180.0)
+        min_lng = params[:west].to_f - distance_lng_in_degrees
+        max_lng = params[:east].to_f + distance_lng_in_degrees
+        @businesses = Business
+          .where('(verified = true OR verified IS NULL)')
+          .where('(lat BETWEEN ? AND  ?) AND (lng BETWEEN ? AND ?)', min_lat, max_lat, min_lng, max_lng)
+      else
+        # Fallback for when frontend is still using the old API
+        # Note to team: we should probably think about API versioning in the future
+        @businesses = Business.all.limit(100)
+      end
     end
 
     private
