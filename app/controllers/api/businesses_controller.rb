@@ -27,7 +27,6 @@ module Api
         .where('(verified = true OR verified IS NULL)')
 
       if params[:north]
-        # FIXME: works only in the northern hemisphere if the map does not contain the null meridian
         min_lat = params[:south].to_f
         max_lat = params[:north].to_f
         add_lat = (max_lat - min_lat) * PERCENTAL_RANGE_EXTENSION / 2
@@ -35,11 +34,17 @@ module Api
         max_lat += add_lat
         min_lng = params[:west].to_f
         max_lng = params[:east].to_f
-        add_lng = (max_lng - min_lng) * PERCENTAL_RANGE_EXTENSION / 2
+        add_lng = (max_lng > min_lng ? max_lng - min_lng : min_lng - max_lng) * PERCENTAL_RANGE_EXTENSION / 2
         min_lng -= add_lng
         max_lng += add_lng
-        @businesses = @businesses
-          .where('(lat BETWEEN ? AND ?) AND (lng BETWEEN ? AND ?)', min_lat, max_lat, min_lng, max_lng)
+        if max_lng > min_lng
+          @businesses = @businesses
+            .where('(lat BETWEEN ? AND ?) AND (lng BETWEEN ? AND ?)', min_lat, max_lat, min_lng, max_lng)
+        else
+          # special case around the 180th meridian east of new zealand
+          @businesses = @businesses
+            .where('(lat BETWEEN ? AND ?) AND ((lng BETWEEN ? AND 180) OR (lng BETWEEN -180 AND ?))', min_lat, max_lat, min_lng, max_lng)
+        end
       end
     end
 
