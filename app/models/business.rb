@@ -10,6 +10,8 @@ class Business < ApplicationRecord
   has_one_base64_attached :favorite_place_image
   has_many :image_references
 
+  validates :name, :street_address, :postcode, :city, :business_type, :lat, :lng, :gmap_id, presence: true
+
   after_save :create_image_ref, :destroy_funding_if_empty
 
   scope :not_yet_verified, lambda {
