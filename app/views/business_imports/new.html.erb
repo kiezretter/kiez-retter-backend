@@ -1,0 +1,18 @@
+<%- model_class = BusinessImport -%>
+
+<p>The CSV needs to have a header row and <strong>exactly</strong> the following columns:</p>
+
+<ul>
+  <li><code>name</code></li>
+  <li><code>street_address</code></li>
+  <li><code>postcode</code></li>
+  <li><code>city</code></li>
+  <li><code>url</code></li>
+</ul>
+
+<p>The business type will be automatically set to <strong>service</strong>.</p>
+
+<div class="page-header">
+  <h1><%=t '.title', :default => [:'helpers.titles.new', 'New %{model}'], :model => model_class.model_name.human.titleize %></h1>
+</div>
+<%= render :partial => 'form' %>

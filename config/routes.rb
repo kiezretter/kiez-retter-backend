@@ -11,6 +11,7 @@ Rails.application.routes.draw do
         patch :reject
       end
     end
+    resources :business_imports, except: [:edit, :update]
   end
 
   namespace 'api', defaults: { format: :json } do
