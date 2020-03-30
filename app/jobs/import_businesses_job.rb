@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 class ImportBusinessesJob < ApplicationJob
   queue_as :default
 
-  COLUMNS = %w[business_type city name postcode street_address url]
+  COLUMNS = %w[business_type city name postcode street_address url].freeze
 
   def perform(business_import)
     csv = CSV.parse(business_import.content.strip, headers: true)
-    if !csv.headers
+    unless csv.headers
       business_import.import_error = 'Header line is missing'
       business_import.save!
       return
@@ -19,8 +21,8 @@ class ImportBusinessesJob < ApplicationJob
     service = BusinessType.find_by(slug: 'service')
     business_type_mapping = Hash[*
       BusinessType
-        .pluck(:slug, :id)
-        .flatten
+                            .pluck(:slug, :id)
+                            .flatten
     ]
     csv.each do |row|
       begin
@@ -37,7 +39,7 @@ class ImportBusinessesJob < ApplicationJob
         ))
         Funding.create!(funding_type: 0, business: b, link: row_form['url'])
         Owner.create!(business: b, paypal_handle: '', email: '', nick_name: '', first_name: '', last_name: '')
-      rescue => e
+      rescue StandardError => e
         business_import.errored(row_form['name'], e)
       end
       business_import.imported_at = Time.now

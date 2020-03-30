@@ -25,7 +25,7 @@ json.business do
   json.verified @business.verified
   if @business.funding
     json.funding do
-      json.funding_type @business.funding.funding_type 
+      json.funding_type @business.funding.funding_type
       json.link @business.funding.link
     end
   end

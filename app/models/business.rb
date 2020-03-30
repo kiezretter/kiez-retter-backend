@@ -9,7 +9,7 @@ class Business < ApplicationRecord
   belongs_to :business_type
   has_one_base64_attached :favorite_place_image
   has_many :image_references, dependent: :destroy
-  belongs_to :business_import, counter_cache: :business_count
+  belongs_to :business_import, counter_cache: :business_count, optional: true
 
   validates :name, :street_address, :postcode, :city, :business_type, :lat, :lng, :gmap_id, presence: true
 
@@ -32,7 +32,7 @@ class Business < ApplicationRecord
   }
 
   def verified?
-    return 'PLEASE CHECK' if verified.nil?
+    return 'PLEASE CHECK' if verified.nil? && owner.paypal_handle.present?
 
     verified
   end

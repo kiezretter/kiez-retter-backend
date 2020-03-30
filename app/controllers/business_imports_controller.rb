@@ -17,7 +17,7 @@ class BusinessImportsController < ApplicationController
       render :new
     end
   end
-  
+
   def index
     @business_imports = BusinessImport.all
   end
