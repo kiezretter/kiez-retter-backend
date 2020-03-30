@@ -2,6 +2,8 @@
 
 module Api
   class BusinessesController < ApplicationController
+    PERCENTAL_RANGE_EXTENSION = 0.2
+
     respond_to :json
 
     def create
@@ -20,7 +22,32 @@ module Api
     end
 
     def index
-      @businesses = Business.not_rejected
+      @businesses = Business
+                    .where('(verified = true OR verified IS NULL)')
+
+      if params[:north]
+        min_lat = params[:south].to_f
+        max_lat = params[:north].to_f
+        add_lat = (max_lat - min_lat) * PERCENTAL_RANGE_EXTENSION / 2
+        min_lat -= add_lat
+        max_lat += add_lat
+        min_lng = params[:west].to_f
+        max_lng = params[:east].to_f
+        if max_lng > min_lng
+          add_lng = (max_lng - min_lng) * PERCENTAL_RANGE_EXTENSION / 2
+          min_lng -= add_lng
+          max_lng += add_lng
+          @businesses = @businesses
+                        .where('(lat BETWEEN ? AND ?) AND (lng BETWEEN ? AND ?)', min_lat, max_lat, min_lng, max_lng)
+        else
+          # special case around the 180th meridian east of new zealand
+          add_lng = (360 + max_lng - min_lng) * PERCENTAL_RANGE_EXTENSION / 2
+          min_lng -= add_lng
+          max_lng += add_lng
+          @businesses = @businesses
+                        .where('(lat BETWEEN ? AND ?) AND ((lng BETWEEN ? AND 180) OR (lng BETWEEN -180 AND ?))', min_lat, max_lat, min_lng, max_lng)
+        end
+      end
     end
 
     private

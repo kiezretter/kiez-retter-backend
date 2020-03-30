@@ -4,7 +4,15 @@ class BusinessesController < ApplicationController
   before_action :set_business, only: %i[show edit update destroy approve reject]
 
   def index
-    @businesses = Business.order(:created_at).reverse
+    @businesses = Business
+                  .order(created_at: :desc)
+                  .includes(:owner)
+
+    return unless params[:business_import_id]
+
+    @business_import = BusinessImport.find params[:business_import_id]
+    @businesses = @businesses
+                  .where(business_import_id: @business_import)
   end
 
   def show; end
@@ -66,9 +74,11 @@ class BusinessesController < ApplicationController
 
   def geo_params
     results = Geocoder.search(address)
-    coordinates = results.first.coordinates
-    place_id = results.first.place_id
-    { lat: coordinates[0], lng: coordinates[1], gmap_id: place_id }
+    if results.one?
+      coordinates = results.first.coordinates
+      place_id = results.first.place_id
+      { lat: coordinates[0], lng: coordinates[1], gmap_id: place_id }
+    end
   end
 
   def business_params
@@ -77,12 +87,12 @@ class BusinessesController < ApplicationController
       :phone_number, :street_address, :postcode, :city,
       :business_type_id, :personal_message, :personal_thank_you,
       :favorite_place_image,
-      owner_attributes: [
-        :id, :paypal_handle, :first_name, :last_name, :nick_name,
-        :email, :salutation, :owner_image, :id_card_image
+      owner_attributes: %i[
+        id paypal_handle first_name last_name nick_name
+        email salutation owner_image id_card_image
       ],
-      funding_attributes: [
-        :id, :link, :funding_type
+      funding_attributes: %i[
+        id link funding_type
       ]
     )
   end
