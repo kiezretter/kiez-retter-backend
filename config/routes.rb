@@ -11,7 +11,7 @@ Rails.application.routes.draw do
         patch :reject
       end
     end
-    resources :business_imports, except: [:edit, :update] do
+    resources :business_imports, except: %i[edit update] do
       member do
         delete :destroy_businesses
       end

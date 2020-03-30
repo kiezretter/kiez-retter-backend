@@ -41,7 +41,7 @@ module Backend
       include_library_param: true
     }
 
-    # FIXME Replace with a sane background worker approach
+    # FIXME: Replace with a sane background worker approach
     config.active_job.queue_adapter = :async
   end
 end

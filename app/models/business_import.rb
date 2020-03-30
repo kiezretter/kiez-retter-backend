@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'csv'
 
 class BusinessImport < ApplicationRecord
@@ -6,7 +8,7 @@ class BusinessImport < ApplicationRecord
   validates :content, presence: true
 
   def errored(name, exception)
-    self.import_error ||= ""
+    self.import_error ||= ''
     self.import_error += "#{name}: #{exception.inspect}\n"
   end
 
