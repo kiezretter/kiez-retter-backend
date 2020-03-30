@@ -6,6 +6,7 @@ class Business < ApplicationRecord
   has_one :funding, dependent: :destroy
   accepts_nested_attributes_for :owner, :trade_certificate, :funding
   has_many :donations, dependent: :destroy
+  has_many :trackings, dependent: :destroy
   belongs_to :business_type
   has_one_base64_attached :favorite_place_image
   has_many :image_references, dependent: :destroy

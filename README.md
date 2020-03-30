@@ -239,4 +239,47 @@ Http code 201
 Http code 422
 (should probably be ignored in the frontend)
 
+# Log trackings for Business
+
+Simple tracking endpoint for clicks and links.
+
+## Endpoint
+
+    /api/trackings
+
+## Type
+
+    http POST
+
+## Parameters
+Where the `business_id` is the id of the business, if it is valuable to the tracking (CAN BE NULL).
+Action relates to the action you are tracking.
+Right now we are using the following actions:
+
+| Action String | Usage | `business_id` useful? |
+|--------|---|---|
+| `crowd_funding` | Click on the crowdfunding button | yes |
+| `voucher` | Click on the voucher button | yes |
+| `flyer_download` | Click on the flyer download link | no |
+
+
+Example:
+```
+{
+	"tracking": {
+		"business_id": 12,
+		"action": "crowd_funding"
+	}
+}
+```
+
+## Response
+
+Http code 201
+
+## Failure Response
+
+Http code 422
+(should probably be ignored in the frontend)
+
 
