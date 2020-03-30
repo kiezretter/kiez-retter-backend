@@ -52,9 +52,14 @@ class ImportBusinessesJob < ApplicationJob
   def geo_params(name, street, city, postcode)
     results = Geocoder.search("#{name} #{street} #{city} #{postcode}")
     if results.one?
-      coordinates = results.first.coordinates
-      place_id = results.first.place_id
-      { lat: coordinates[0], lng: coordinates[1], gmap_id: place_id }
+      result = results.first
+      { 
+        lat: result.coordinates[0], 
+        lng: result.coordinates[1], 
+        gmap_id: result.place_id, 
+        city: result.city,
+        postcode: result.postal_code
+      }
     end
   end
 end
