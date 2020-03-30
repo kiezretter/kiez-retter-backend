@@ -1,6 +1,10 @@
 <%- model_class = Business -%>
 <div class="page-header">
   <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+  <% if @business_import -%>
+    <h2>aus Import <%= link_to @business_import.id, @business_import %></h2>
+  <% end -%>
+
 </div>
 <%= link_to 'Neues Business anlegen',
             new_business_path,

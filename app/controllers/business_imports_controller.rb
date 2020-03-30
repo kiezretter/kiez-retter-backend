@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class BusinessImportsController < ApplicationController
-  before_action :set_business_import, only: %i[show destroy]
+  before_action :set_business_import, only: %i[show destroy destroy_businesses]
 
   def new
     @business_import = BusinessImport.new
@@ -27,6 +27,11 @@ class BusinessImportsController < ApplicationController
   def destroy
     @business_import.destroy
     redirect_to business_imports_url, notice: 'Business import was successfully destroyed.'
+  end
+
+  def destroy_businesses
+    @business_import.destroy_businesses
+    redirect_to business_import_url(@business_import), notice: 'Imported businesses have successfully been destroyed.'
   end
 
   private

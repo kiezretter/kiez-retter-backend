@@ -8,9 +8,11 @@
   <li><code>postcode</code></li>
   <li><code>city</code></li>
   <li><code>url</code></li>
+  <li>
+    <code>business_type</code>: one of 
+    <%= BusinessType.pluck(:slug).map {|bt| raw("<code>#{bt}</code>")}.to_sentence(last_word_connector: ' or ').html_safe %>
+  </li>
 </ul>
-
-<p>The business type will be automatically set to <strong>service</strong>.</p>
 
 <div class="page-header">
   <h1><%=t '.title', :default => [:'helpers.titles.new', 'New %{model}'], :model => model_class.model_name.human.titleize %></h1>
