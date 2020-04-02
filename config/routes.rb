@@ -3,8 +3,10 @@
 Rails.application.routes.draw do
   devise_for :admins, skip: [:registrations]
   authenticate :admin do
-    root to: 'pages#home'
+    root to: 'businesses#index'
+    get '/check_dead_links', to: 'dead_links#check_dead_links'
     resources :business_types
+    resources :dead_links, only: %i[index destroy]
     resources :businesses do
       member do
         patch :approve
