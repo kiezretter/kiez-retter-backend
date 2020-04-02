@@ -32,6 +32,12 @@ class Business < ApplicationRecord
     where('verified = true OR verified IS NULL')
   }
 
+  scope :only_duplicates, lambda {
+    select('name, city, COUNT(*)')
+      .group(:name, :city)
+      .having('COUNT(*) > 1')
+  }
+
   def verified?
     return 'PLEASE CHECK' if verified.nil? && owner.paypal_handle.present?
 

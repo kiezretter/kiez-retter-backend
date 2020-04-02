@@ -58,6 +58,10 @@ class BusinessesController < ApplicationController
     redirect_to businesses_path, alert: 'Statement was rejected.'
   end
 
+  def check_duplicates
+    @businesses = Business.only_duplicates
+  end
+
   private
 
   def set_business

@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   authenticate :admin do
     root to: 'businesses#index'
     get '/check_dead_links', to: 'dead_links#check_dead_links'
+    get '/check_duplicates', to: 'businesses#check_duplicates'
     resources :business_types
     resources :dead_links, only: %i[index destroy]
     resources :businesses do

@@ -1,0 +1,29 @@
+<%- model_class = Business -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+  <% if @business_import -%>
+    <h2>aus Import <%= link_to @business_import.id, @business_import %></h2>
+  <% end -%>
+
+</div>
+<br>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:name) %></th>
+      <th>Ids</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @businesses.each do |business| %>
+      <tr>
+        <td><%= business.name %></td>
+        <td>
+          <% Business.where(name: business.name).each do |duplicate_business| %>
+            <%= link_to duplicate_business.id, business_path(duplicate_business.id)  %> |
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
