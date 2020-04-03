@@ -1,16 +1,10 @@
-<%- model_class = Business -%>
-<div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
-  <% if @business_import -%>
-    <h2>aus Import <%= link_to @business_import.id, @business_import %></h2>
-  <% end -%>
-
-</div>
+<h2>Duplicate Businesses</h2>
+<p>Aufgelistet, wenn Name und Stadt sich gleichen</p>
 <br>
 <table class="table table-striped">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:name) %></th>
+      <th>Business Name</th>
       <th>Ids</th>
     </tr>
   </thead>
