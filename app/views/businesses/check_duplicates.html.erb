@@ -5,6 +5,7 @@
   <thead>
     <tr>
       <th>Business Name</th>
+      <th>Stadt</th>
       <th>Ids</th>
     </tr>
   </thead>
@@ -12,8 +13,9 @@
     <% @businesses.each do |business| %>
       <tr>
         <td><%= business.name %></td>
+        <td><%= business.city %></td>
         <td>
-          <% Business.where(name: business.name).each do |duplicate_business| %>
+          <% Business.where(name: business.name, city: business.city).each do |duplicate_business| %>
             <%= link_to duplicate_business.id, business_path(duplicate_business.id)  %> |
           <% end %>
         </td>
