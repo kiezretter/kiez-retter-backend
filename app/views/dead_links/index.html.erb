@@ -14,6 +14,7 @@
     <tr>
       <th>Business</th>
       <th>Link</th>
+      <th>Error</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -23,6 +24,7 @@
       <tr>
         <td><%= link_to dead_link.funding.business.name, business_path(dead_link.funding.business) %></td>
         <td><a target="_blank" href="<%= dead_link.link %>"><%= dead_link.link %></a></td>
+        <td><%= dead_link.error_msg %></td>
         <td><%= link_to 'Destroy', dead_link, method: :delete, class: 'btn btn-xs btn-danger' %></td>
       </tr>
     <% end %>
