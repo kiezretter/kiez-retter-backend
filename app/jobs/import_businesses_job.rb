@@ -53,10 +53,10 @@ class ImportBusinessesJob < ApplicationJob
     results = Geocoder.search("#{name} #{street} #{city} #{postcode}")
     if results.one?
       result = results.first
-      { 
-        lat: result.coordinates[0], 
-        lng: result.coordinates[1], 
-        gmap_id: result.place_id, 
+      {
+        lat: result.coordinates[0],
+        lng: result.coordinates[1],
+        gmap_id: result.place_id,
         city: result.city,
         postcode: result.postal_code
       }

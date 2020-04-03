@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Api
   class TrackingsController < ApplicationController
     def create
