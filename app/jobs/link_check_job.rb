@@ -7,6 +7,7 @@ class LinkCheckJob < ApplicationJob
     fundings = Funding.where.not(link: nil)
     fundings.each do |funding|
       check_link(funding)
+      puts '.'
       sleep 1
     end
   end
@@ -14,11 +15,14 @@ class LinkCheckJob < ApplicationJob
   private
 
   def check_link(funding)
-    response = http_request(funding.link)
-    return if response.is_a? Net::HTTPSuccess
-    return if %w[302 307 308].include? response.code
-    return if DeadLink.find_by(funding: funding)
-
+    begin
+      response = http_request(funding.link)
+      return if response.is_a? Net::HTTPSuccess
+      return if %w[302 307 308].include? response.code
+      return if DeadLink.find_by(funding: funding)
+    rescue StandardError => e
+      return DeadLink.create!(link: funding.link, funding: funding, error_msg: e)
+    end
     DeadLink.create!(link: funding.link, funding: funding)
   end
 
