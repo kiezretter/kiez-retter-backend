@@ -16,6 +16,7 @@ class LinkCheckJob < ApplicationJob
   def check_link(funding)
     response = http_request(funding.link)
     return if response.is_a? Net::HTTPSuccess
+    return if %w[302 307 308].include? response.code
     return if DeadLink.find_by(funding: funding)
 
     DeadLink.create!(link: funding.link, funding: funding)
