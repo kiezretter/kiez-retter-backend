@@ -48,6 +48,8 @@
 
   <% @business.fundings.each do |funding| %>
     <h5>Funding</h5>
+    <dt><strong>Partner:</strong></dt>
+    <dd><a href="<%= url_for funding.partner %>"><%= funding.partner.name %></a></dd>
     <dt><strong>Gutschein Link:</strong></dt>
     <dd><a href="<%= funding.link %>" target="_blank"><%= funding.link %></a></dd>
     <dt><strong>Funding Type:</strong></dt>

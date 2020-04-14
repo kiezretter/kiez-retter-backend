@@ -96,7 +96,7 @@ class BusinessesController < ApplicationController
         email salutation owner_image id_card_image
       ],
       fundings_attributes: %i[
-        id link funding_type
+        id link funding_type partner_id _destroy
       ]
     )
   end

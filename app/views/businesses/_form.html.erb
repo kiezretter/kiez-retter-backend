@@ -113,9 +113,15 @@
     </div>
   <% end %>
   <br>
-  <h4>Funding</h4>
   <% (@business.fundings + [@business.fundings.new]).each do |funding| -%>
+    <h4><% if funding.new_record? %>New <% end %>Funding</h4>
     <%= f.fields_for :fundings, funding do |funding_field| %>
+      <div class="form-group">
+        <%= funding_field.label :partner, :class => 'control-label col-lg-2' %>
+        <div class="col-lg-10">
+          <%= funding_field.collection_select :partner_id, Partner.all, :id, :name, { prompt: true }, class: 'form-control' %>
+        </div>
+      </div>
       <div class="form-group">
         <%= funding_field.label :link, :class => 'control-label col-lg-2' %>
         <div class="col-lg-10">
@@ -125,9 +131,19 @@
       <div class="form-group">
         <%= funding_field.label :funding_type, :class => 'control-label col-lg-2' %>
         <div class="col-lg-10">
-          <%= funding_field.select :funding_type, Funding.funding_types.keys.to_a, class: 'form-control', prompt: true %>
+          <%= funding_field.select :funding_type, Funding.funding_types.keys.to_a, { prompt: true }, class: 'form-control', prompt: true %>
         </div>
       </div>
+      <% unless funding_field.object.new_record? -%>
+        <div class="form-group">
+          <%= funding_field.label :_destroy, class: 'control-label col-lg-2' do %>
+            Delete?
+          <% end %>
+          <div class="col-lg-10">
+            <%= funding_field.check_box :_destroy, class: 'form-control' %>
+          </div>
+        </div>
+      <% end -%>
     <% end %>
   <% end -%>
   <br>

@@ -3,8 +3,9 @@
 class Business < ApplicationRecord
   has_one :owner, dependent: :destroy
   has_one :trade_certificate, dependent: :destroy
-  has_many :fundings, dependent: :destroy
-  accepts_nested_attributes_for :owner, :trade_certificate, :fundings
+  has_many :fundings, -> { order :id }, dependent: :destroy
+  accepts_nested_attributes_for :owner, :trade_certificate
+  accepts_nested_attributes_for :fundings, allow_destroy: true, reject_if: -> funding { funding['link'].blank? }
   has_many :donations, dependent: :destroy
   has_many :trackings, dependent: :destroy
   belongs_to :business_type
