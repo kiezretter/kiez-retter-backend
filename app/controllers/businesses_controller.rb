@@ -78,7 +78,7 @@ class BusinessesController < ApplicationController
 
   def geo_params
     results = Geocoder.search(address)
-    if results.one?
+    if results.any?
       coordinates = results.first.coordinates
       place_id = results.first.place_id
       { lat: coordinates[0], lng: coordinates[1], gmap_id: place_id }
