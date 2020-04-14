@@ -46,12 +46,12 @@
     <dd><%= link_to 'Link', attached_image_url(@business.owner.id_card_image), target: '_blank' %></dd>
   <% end %>
 
-  <% if @business.funding.present? %>
+  <% @business.fundings.each do |funding| %>
     <h5>Funding</h5>
     <dt><strong>Gutschein Link:</strong></dt>
-    <dd><a href="<%= @business.funding.link %>" target="_blank"><%= @business.funding.link %></a></dd>
+    <dd><a href="<%= funding.link %>" target="_blank"><%= funding.link %></a></dd>
     <dt><strong>Funding Type:</strong></dt>
-    <dd><%= @business.funding.funding_type.humanize %></dd>
+    <dd><%= funding.funding_type.humanize %></dd>
   <% end %>
 </dl>
 

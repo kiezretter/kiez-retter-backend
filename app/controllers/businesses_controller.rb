@@ -95,7 +95,7 @@ class BusinessesController < ApplicationController
         id paypal_handle first_name last_name nick_name
         email salutation owner_image id_card_image
       ],
-      funding_attributes: %i[
+      fundings_attributes: %i[
         id link funding_type
       ]
     )
