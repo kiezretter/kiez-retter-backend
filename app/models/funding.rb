@@ -15,7 +15,7 @@ class Funding < ApplicationRecord
     begin
       host = URI.parse(self.link).host
     rescue
-      raise "Funding link broken: #{funding.inspect}"
+      raise "Funding link broken: #{self.inspect}"
     end
     home_url = 'https://' + host
     self.partner = Partner.find_or_create_by!(name: host, home_url: home_url)
