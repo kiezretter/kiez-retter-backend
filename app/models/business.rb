@@ -3,8 +3,9 @@
 class Business < ApplicationRecord
   has_one :owner, dependent: :destroy
   has_one :trade_certificate, dependent: :destroy
-  has_one :funding, dependent: :destroy
-  accepts_nested_attributes_for :owner, :trade_certificate, :funding
+  has_many :fundings, -> { order :id }, dependent: :destroy
+  accepts_nested_attributes_for :owner, :trade_certificate
+  accepts_nested_attributes_for :fundings, allow_destroy: true, reject_if: -> funding { funding['link'].blank? }
   has_many :donations, dependent: :destroy
   has_many :trackings, dependent: :destroy
   belongs_to :business_type
@@ -14,7 +15,7 @@ class Business < ApplicationRecord
 
   validates :name, :street_address, :postcode, :city, :business_type, :lat, :lng, :gmap_id, presence: true
 
-  after_save :create_image_ref, :destroy_funding_if_empty
+  after_save :create_image_ref
 
   scope :not_yet_verified, lambda {
     where(verified: nil)
@@ -45,12 +46,6 @@ class Business < ApplicationRecord
   end
 
   private
-
-  def destroy_funding_if_empty
-    return unless funding.present?
-
-    funding.destroy! if funding.link.blank? && funding.funding_type.nil?
-  end
 
   def create_image_ref
     return unless image_references.none?
