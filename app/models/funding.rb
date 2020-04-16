@@ -12,13 +12,11 @@ class Funding < ApplicationRecord
   def create_partner_if_not_exist
     return if partner
 
-    begin
-      host = URI.parse(self.link).host
-    rescue
-      raise "Funding link broken: #{self.inspect}"
-    end
-    home_url = 'https://' + host
-    self.partner = Partner.find_or_create_by!(name: host, home_url: home_url)
+    uri = Addressable::URI.parse(self.link)
+    raise "Funding link broken: #{self.inspect}" unless uri.host
+
+    home_url = uri.scheme + '://' + uri.host
+    self.partner = Partner.find_or_create_by!(name: uri.host, home_url: home_url)
     save!
   end
 
