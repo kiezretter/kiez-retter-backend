@@ -58,7 +58,7 @@ class BusinessesController < ApplicationController
     redirect_to businesses_path, alert: 'Statement was rejected.'
   end
 
-  def updatetypes
+  def update_business_types
     BusinessTypeUpdateJob.perform_later
     redirect_to businesses_path, notice: 'Update job has been started.'
   end
@@ -82,7 +82,7 @@ class BusinessesController < ApplicationController
   end
 
   def geo_params
-    results = Geocoder.search(address)
+    results = Geocoder.search(address, lookup: :google)
     if results.one?
       coordinates = results.first.coordinates
       place_id = results.first.place_id

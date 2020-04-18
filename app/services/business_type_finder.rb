@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-module GeocoderHelper
+class BusinessTypeFinder
 
-    def maybe_get_business_type(business_type_mapping, place_id)
+    def self.find_business_type(business_type_mapping, place_id)
         if place_id.nil?
           return nil
         end
-        response = Geocoder.search(place_id, lookup: :google_places_details)
+        response = Geocoder.search(place_id, lookup: :google_places_details, fields: 'type')
         place_types = response.first.types
-        if place_types.nil? || place_types.length == 0
+        if place_types.nil? || place_types.length.zero?
           return nil
         end
         # https://developers.google.com/places/web-service/supported_types

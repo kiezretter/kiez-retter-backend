@@ -49,7 +49,7 @@ class ImportBusinessesJob < ApplicationJob
   private
   
   def get_business_type_or_default(business_type_mapping, place_id)
-    business_type = ApplicationController.helpers.maybe_get_business_type(business_type_mapping, place_id)
+    business_type = BusinessTypeFinder.find_business_type(business_type_mapping, place_id)
     return business_type.nil? ? business_type_mapping['service'] : business_type
   end
 

@@ -15,7 +15,7 @@ class BusinessTypeUpdateJob < ApplicationJob
 
         Business.find_each do |business|
             unless business.gmap_id.nil?
-                business_type_id = ApplicationController.helpers.maybe_get_business_type(business_type_mapping, business.gmap_id)
+                business_type_id = BusinessTypeFinder.find_business_type(business_type_mapping, business.gmap_id)
                 unless business_type_id.nil? || business_type_id == business.business_type_id
                     logger.info business.name + ' ' +
                         slug_by_id[business.business_type_id].to_s + ' -> ' + slug_by_id[business_type_id].to_s
