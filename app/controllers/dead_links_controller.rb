@@ -7,6 +7,11 @@ class DeadLinksController < ApplicationController
     @dead_links = DeadLink.all.includes(:funding)
   end
 
+  def update_business_types
+    BusinessTypeUpdateJob.perform_later
+    redirect_to dead_links_path, notice: 'Update job has been started.'
+  end
+
   def destroy
     return unless @dead_link.destroy
 

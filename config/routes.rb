@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     root to: 'businesses#index'
     get '/check_dead_links', to: 'dead_links#check_dead_links'
     get '/check_duplicates', to: 'businesses#check_duplicates'
-    get '/update_business_types', to: 'businesses#update_business_types'
+    get '/update_business_types', to: 'dead_links#update_business_types'
     resources :business_types
     resources :dead_links, only: %i[index destroy]
     resources :businesses do

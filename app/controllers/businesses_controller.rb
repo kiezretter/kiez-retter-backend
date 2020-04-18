@@ -58,11 +58,6 @@ class BusinessesController < ApplicationController
     redirect_to businesses_path, alert: 'Statement was rejected.'
   end
 
-  def update_business_types
-    BusinessTypeUpdateJob.perform_later
-    redirect_to businesses_path, notice: 'Update job has been started.'
-  end
-
   def check_duplicates
     @businesses = Business.only_duplicates
   end
