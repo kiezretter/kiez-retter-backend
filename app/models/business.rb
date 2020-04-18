@@ -69,7 +69,7 @@ class Business < ApplicationRecord
 
   def http_request(url)
     uri = Addressable::URI.parse(url)
-    http = Net::HTTP.new(uri.host, uri.port)
+    http = Net::HTTP.new(uri.host, uri.port || uri.inferred_port)
     request = Net::HTTP::Get.new(uri.request_uri)
     http.use_ssl = true
     http.request(request)
