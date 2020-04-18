@@ -13,7 +13,7 @@ jobs:
       - uses: chrislennon/action-aws-cli@v1.1
 
       - name: Build and push image
-        uses: whoan/docker-build-with-cache-action@v4
+        uses: whoan/docker-build-with-cache-action@v5
         with:
           username: ${{ secrets.AWS_ACCESS_KEY_ID }}
           password: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
