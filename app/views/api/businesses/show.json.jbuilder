@@ -23,12 +23,23 @@ json.business do
     json.lng @business.lng
   end
   json.verified @business.verified
-  if @business.funding
+
+  ## FIXME Remove this block when frontend has been migrated to multiple fundings
+  if @business.fundings.any?
+    funding = @business.fundings.first
     json.funding do
-      json.funding_type @business.funding.funding_type
-      json.link @business.funding.link
+      json.funding_type funding.funding_type
+      json.link funding.link
     end
   end
+
+  json.fundings do
+    json.array! @business.fundings do |funding|
+      json.funding_type funding.funding_type
+      json.link funding.link
+    end
+  end
+
   if @business.image_references.any?
     json.image_references @business.image_references, :google_reference
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_03_160200) do
+ActiveRecord::Schema.define(version: 2020_04_14_230200) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -108,7 +108,9 @@ ActiveRecord::Schema.define(version: 2020_04_03_160200) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "funding_type"
+    t.bigint "partner_id"
     t.index ["business_id"], name: "index_fundings_on_business_id"
+    t.index ["partner_id"], name: "index_fundings_on_partner_id"
   end
 
   create_table "image_references", force: :cascade do |t|
@@ -130,6 +132,14 @@ ActiveRecord::Schema.define(version: 2020_04_03_160200) do
     t.string "last_name"
     t.string "first_name"
     t.index ["business_id"], name: "index_owners_on_business_id"
+  end
+
+  create_table "partners", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "home_url", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "fundings_count"
   end
 
   create_table "passports", force: :cascade do |t|

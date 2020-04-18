@@ -20,6 +20,7 @@ Rails.application.routes.draw do
         delete :destroy_businesses
       end
     end
+    resources :partners
   end
 
   namespace 'api', defaults: { format: :json } do
