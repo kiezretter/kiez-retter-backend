@@ -59,19 +59,10 @@ class Business < ApplicationRecord
   end
 
   def fetch_image_details_from_google
-    url = "https://maps.googleapis.com/maps/api/place/details/json?key=#{Rails.application.credentials.dig(:google_api_key)}&place_id=#{gmap_id}"
-    response = http_request(url)
-    result = JSON.parse(response.body)['result']
-    return nil if result['photos'].nil?
-
-    result['photos'][0..1].map { |photo| photo['photo_reference'] }
+    response = Geocoder.search(gmap_id, lookup: :google_places_details, fields: 'photo')
+    photos = response.first.photos
+    return nil if photos.nil?
+    photos[0..1].map { |photo| photo['photo_reference'] }
   end
 
-  def http_request(url)
-    uri = Addressable::URI.parse(url)
-    http = Net::HTTP.new(uri.host, uri.port || uri.inferred_port)
-    request = Net::HTTP::Get.new(uri.request_uri)
-    http.use_ssl = true
-    http.request(request)
-  end
 end

@@ -77,7 +77,7 @@ class BusinessesController < ApplicationController
   end
 
   def geo_params
-    results = Geocoder.search(address)
+    results = Geocoder.search(address, lookup: :google)
     if results.any?
       coordinates = results.first.coordinates
       place_id = results.first.place_id

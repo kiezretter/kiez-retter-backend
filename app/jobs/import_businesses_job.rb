@@ -28,14 +28,13 @@ class ImportBusinessesJob < ApplicationJob
       begin
         row_form = row.to_hash
         b = Business.create!({
-          business_type_id: business_type_mapping[row_form['business_type']],
           name: row_form['name'],
           street_address: row_form['street_address'],
           postcode: row_form['postcode'],
           city: row_form['city'],
           business_import: business_import
         }.merge(
-          geo_params(row_form['name'], row_form['street'], row_form['city'], row_form['postcode'])
+          geo_params(business_type_mapping, row_form['name'], row_form['street'], row_form['city'], row_form['postcode'])
         ))
         Funding.create!(funding_type: 0, business: b, link: row_form['url'])
         Owner.create!(business: b, paypal_handle: '', email: '', nick_name: '', first_name: '', last_name: '')
@@ -48,12 +47,18 @@ class ImportBusinessesJob < ApplicationJob
   end
 
   private
+  
+  def get_business_type_or_default(business_type_mapping, place_id)
+    business_type = BusinessTypeFinder.find_business_type(business_type_mapping, place_id)
+    return business_type.nil? ? business_type_mapping['service'] : business_type
+  end
 
-  def geo_params(name, street, city, postcode)
-    results = Geocoder.search("#{name} #{street} #{city} #{postcode}")
+  def geo_params(business_type_mapping, name, street, city, postcode)
+    results = Geocoder.search("#{name} #{street} #{city} #{postcode}", lookup: :google)
     if results.one?
       result = results.first
       {
+        business_type_id: get_business_type_or_default(business_type_mapping, result.place_id),
         lat: result.coordinates[0],
         lng: result.coordinates[1],
         gmap_id: result.place_id,
