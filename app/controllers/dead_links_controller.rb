@@ -13,11 +13,6 @@ class DeadLinksController < ApplicationController
     redirect_to dead_links_url, notice: 'Dead link was successfully destroyed.'
   end
 
-  def check_dead_links
-    LinkCheckJob.perform_later
-    redirect_to dead_links_path, notice: 'Link Checker ist gestartet.'
-  end
-
   private
 
   def set_dead_link

@@ -77,7 +77,7 @@ class BusinessesController < ApplicationController
   end
 
   def geo_params
-    results = Geocoder.search(address)
+    results = Geocoder.search(address, lookup: :google)
     if results.any?
       coordinates = results.first.coordinates
       place_id = results.first.place_id
@@ -95,8 +95,8 @@ class BusinessesController < ApplicationController
         id paypal_handle first_name last_name nick_name
         email salutation owner_image id_card_image
       ],
-      funding_attributes: %i[
-        id link funding_type
+      fundings_attributes: %i[
+        id link funding_type partner_id _destroy
       ]
     )
   end

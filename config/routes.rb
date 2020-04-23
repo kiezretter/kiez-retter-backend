@@ -4,9 +4,11 @@ Rails.application.routes.draw do
   devise_for :admins, skip: [:registrations]
   authenticate :admin do
     root to: 'businesses#index'
-    get '/check_dead_links', to: 'dead_links#check_dead_links'
+    get '/check_dead_links', to: 'cleanups#check_dead_links'
     get '/check_duplicates', to: 'businesses#check_duplicates'
+    get '/update_business_types', to: 'cleanups#update_business_types'
     resources :business_types
+    resources :cleanups
     resources :dead_links, only: %i[index destroy]
     resources :businesses do
       member do
@@ -19,6 +21,7 @@ Rails.application.routes.draw do
         delete :destroy_businesses
       end
     end
+    resources :partners
   end
 
   namespace 'api', defaults: { format: :json } do
