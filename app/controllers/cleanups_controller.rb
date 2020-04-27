@@ -15,4 +15,9 @@ class CleanupsController < ApplicationController
     redirect_to cleanups_path, notice: 'Link Checker ist gestartet.'
   end
 
+  def delete_verified_documents
+    DocumentDeletionJob.perform_later
+    redirect_to cleanups_path, notice: 'Document Deletion job has been started.'
+  end
+
 end

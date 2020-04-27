@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     get '/check_dead_links', to: 'cleanups#check_dead_links'
     get '/check_duplicates', to: 'businesses#check_duplicates'
     get '/update_business_types', to: 'cleanups#update_business_types'
+    get '/delete_verified_documents', to: 'cleanups#delete_verified_documents'
     resources :business_types
     resources :cleanups
     resources :dead_links, only: %i[index destroy]
