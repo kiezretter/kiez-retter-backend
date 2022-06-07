@@ -120,7 +120,7 @@ GEM
       imgix (~> 3.0)
     jbuilder (2.10.0)
       activesupport (>= 5.0.0)
-    jmespath (1.4.0)
+    jmespath (1.6.1)
     less (2.6.0)
       commonjs (~> 0.2.7)
     less-rails (4.0.0)
